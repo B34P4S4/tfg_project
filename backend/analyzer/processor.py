@@ -6,7 +6,7 @@ import os
 from .chunking import dividir_codigo
 
 # EXTENSIONES DE ARCHIVOS ANALIZABLES POR LA APLICACIÓN
-EXTENSIONES_VALIDAS = [".py", ".js", ".tsx", ".php", ".sql"]
+EXTENSIONES_VALIDAS = [".py", ".js", ".ts", ".php", ".sql"]
 
 ###
 # Accede a la ruta indicada para obtener los archivos del proyecto a analizar
@@ -18,12 +18,17 @@ def leer_proyecto(ruta):
         for file in files:
             if any(file.endswith(ext) for ext in EXTENSIONES_VALIDAS):
                 path = os.path.join(root, file)
+                
+                # Obtener la extensión del archivo
+                _, extension = os.path.splitext(file)
+
 
                 with open(path, "r", encoding="utf-8", errors="ignore") as f:
                     contenido = f.read()
 
                 archivos.append({
                     "file": path,
+                    "extension": extension,
                     "content": contenido
                 })
 
@@ -42,6 +47,7 @@ def procesar_proyecto(ruta):
 
         resultado.append({
             "file": archivo["file"],
+            "extension": archivo["extension"],
             "chunks": chunks
         })
 
