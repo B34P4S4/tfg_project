@@ -9,6 +9,29 @@ from .chunking import dividir_codigo
 EXTENSIONES_VALIDAS = [".py", ".js", ".ts", ".php", ".sql"]
 
 ###
+# Detecta el lenguaje de programación y devuelve el nombre
+###
+def detecta_lenguaje(extension):
+    lenguaje = "otro"
+
+    match extension:
+        case ".py":
+            lenguaje = "python"
+        case ".js":
+            lenguaje = "javascript"
+        case ".ts":
+            lenguaje = "typescript"
+        case ".php":
+            lenguaje = "PHP"
+        case ".sql":
+            lenguaje = "SQL"
+        case _:
+            lenguaje = "otro"
+
+    return lenguaje
+
+
+###
 # Accede a la ruta indicada para obtener los archivos del proyecto a analizar
 ###
 def leer_proyecto(ruta):
@@ -22,6 +45,7 @@ def leer_proyecto(ruta):
                 # Obtener la extensión del archivo
                 _, extension = os.path.splitext(file)
 
+                lenguaje = detecta_lenguaje(extension)
 
                 with open(path, "r", encoding="utf-8", errors="ignore") as f:
                     contenido = f.read()
@@ -29,6 +53,7 @@ def leer_proyecto(ruta):
                 archivos.append({
                     "file": path,
                     "extension": extension,
+                    "lenguaje": lenguaje,
                     "content": contenido
                 })
 
@@ -48,6 +73,7 @@ def procesar_proyecto(ruta):
         resultado.append({
             "file": archivo["file"],
             "extension": archivo["extension"],
+            "lenguaje": archivo["lenguaje"],
             "chunks": chunks
         })
 

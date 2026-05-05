@@ -6,13 +6,13 @@ from flask import Flask, request, jsonify
 import json
 
 from analyzer.processor import procesar_proyecto
-from core.ai.prompt_builder import build_prompt
-from core.ai.client_openAI import analyze_with_ai
+from core.ai.prompt_builder import construir_prompt
+from core.ai.client_openAI import analizar_ia
 
 app = Flask(__name__)
+@app.route("/analiza", methods=["POST"])
 
-@app.route("/analyze", methods=["POST"])
-def analyze():
+def analiza():
     try:
         data = request.get_json()
 
@@ -20,18 +20,33 @@ def analyze():
             return jsonify({"error": "Falta el campo 'path'"}), 400
 
         ruta = data["path"]
-        language = data.get("language", "python")
-
         proyecto = procesar_proyecto(ruta)
-        prompt = build_prompt(proyecto, language)
 
-        ai_result = analyze_with_ai(prompt)
+        resultados = []
 
-        # 🔥 IMPORTANTE: asegurar que es dict
-        if isinstance(ai_result, str):
-            ai_result = json.loads(ai_result)
+        for archivo in proyecto:
+            for i, chunk in enumerate(archivo["chunks"]):
+                print(len(archivo["chunks"]), archivo["file"])
 
-        return jsonify(ai_result)
+                prompt = construir_prompt(
+                    chunk,
+                    file_path=archivo["file"],
+                    lenguaje=archivo["lenguaje"]
+                )
+
+                resultado_ia = analizar_ia(prompt)
+
+                if isinstance(resultado_ia, str):
+                    resultado_ia = json.loads(resultado_ia)
+
+                resultados.append({
+                    "file": archivo["file"],
+                    "lenguaje": archivo["lenguaje"],
+                    "chunk_id": i,
+                    "resultado": resultado_ia
+                })
+
+        return jsonify(resultados)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
