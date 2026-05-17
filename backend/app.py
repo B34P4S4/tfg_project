@@ -7,7 +7,9 @@ import json
 
 from analyzer.processor import procesar_proyecto
 from core.ai.prompt_builder import construir_prompt
-from core.ai.client_openAI import analizar_ia
+from core.ai.client_openAI import analizar_ia1
+from core.ai.client_geminiAI import analizar_ia2
+from core.ai.aggregator import combinar
 
 app = Flask(__name__)
 @app.route("/analiza", methods=["POST"])
@@ -34,16 +36,30 @@ def analiza():
                     lenguaje=archivo["lenguaje"]
                 )
 
-                resultado_ia = analizar_ia(prompt)
+                resultado_ia1 = analizar_ia1(prompt) # analizamos con OpenAI
+                resultado_ia2 = analizar_ia2(prompt) # analizamos con Gemini                
 
-                if isinstance(resultado_ia, str):
-                    resultado_ia = json.loads(resultado_ia)
+                if isinstance(resultado_ia1, str):
+                    try:
+                        resultado_ia1 = json.loads(resultado_ia1)
+                    except:
+                        print("JSON inválido:", resultado_ia1)
+                        resultado_ia1 = {"raw": resultado_ia1}
+
+                if isinstance(resultado_ia2, str):
+                    try:
+                        resultado_ia2 = json.loads(resultado_ia2)
+                    except:
+                        print("JSON inválido:", resultado_ia2)
+                        resultado_ia2 = {"raw": resultado_ia2}
+
+                res_combinado = combinar(resultado_ia1, resultado_ia2)
 
                 resultados.append({
                     "file": archivo["file"],
                     "lenguaje": archivo["lenguaje"],
                     "chunk_id": i,
-                    "resultado": resultado_ia
+                    "resultado": res_combinado
                 })
 
         return jsonify(resultados)

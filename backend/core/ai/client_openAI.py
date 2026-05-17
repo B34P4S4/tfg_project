@@ -3,7 +3,7 @@ from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def analizar_ia(prompt):
+def analizar_ia1(prompt):
    
     try:
         response = client.chat.completions.create(
