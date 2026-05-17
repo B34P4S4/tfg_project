@@ -29,4 +29,4 @@ def analizar_ia2(prompt):
 
     except Exception as e:
         print("ERROR IA:", repr(e))
-        raise e   # MUY IMPORTANTE
+        raise e   # si no obtenemos respuesta de Gemini nos indicará qué ha ocurrido

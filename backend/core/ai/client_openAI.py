@@ -10,7 +10,7 @@ def analizar_ia1(prompt):
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"},
-            timeout=30
+            timeout=30  # lanzamos consulta a OpenAI cada 30 segundos
         )
 
         print("Respuesta recibida")
@@ -18,5 +18,5 @@ def analizar_ia1(prompt):
         return response.choices[0].message.content
 
     except Exception as e:
-        print("ERROR IA:", e)
+        print("ERROR IA:", e)  # si no obtenemos respuesta de OpenAI nos indicará qué ha ocurrido
         return "{}"
