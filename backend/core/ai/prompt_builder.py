@@ -11,15 +11,21 @@ def construir_prompt(context, code, file_path=None, lenguaje=None):
         ]
     )
 
+    print("CONTEXTO DEL RAG:", context_text)
+
     # montamos el prompt para las IA
     return f"""
-    Analiza el siguiente código fuente y determina si contiene vulnerabilidades de seguridad.
+    Eres un auditor de código software.
+    Dispones del siguiente contexto de vulnerabilidades de código conocidas:{context_text}
 
-    Contexto del análisis:
+    INSTRUCCIONES:
+    - Utiliza el contexto proporcionado para identificar vulnerabilidades similares
+    - Si el código coincide con alguna vulnerabilidad del contexto, indícalo explícitamente
+    - Si no hay coincidencia exacta, razona posibles vulnerabilidades basadas en el contexto
+
+    Analiza el siguiente código fuente y determina si contiene vulnerabilidades de seguridad:
     - Archivo: {file_path if file_path else "desconocido"}
     - Lenguaje: {lenguaje if lenguaje else "desconocido"}
-
-    Contexto de vulnerabilidades conocidas:{context_text}
 
     Devuelve exclusivamente un objeto JSON válido (sin texto adicional) con la siguiente estructura exacta:
     {{

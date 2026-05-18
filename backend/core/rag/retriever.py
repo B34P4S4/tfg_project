@@ -1,12 +1,21 @@
 from core.rag.knowledge_base import KNOWLEDGE_BASE
+from core.rag.embeddings import embeber_texto
+from core.rag.init_rag import vector_store
 
-def recuperar_contexto(code):
+# obtenemos contexto del RAG automáticamente
+def recuperar_contexto(chunk, vector_store):
+    query_vector = embeber_texto(chunk)    
+    return vector_store.search(query_vector, k=2)
+
+# obtenemos el contexto manualmente
+def recuperar_contexto_manual(code):
     context = []
 
     # extraemos el texto
     if isinstance(code, dict):
         code = code.get("code", "")
 
+    # unificamos pasandolo todo a minusculas
     code_lower = code.lower()
 
     # A01: Broken Access Control
