@@ -1,6 +1,6 @@
-from core.rag.knowledge_base import KNOWLEDGE_BASE
-from core.rag.embeddings import embeber_texto
-from core.rag.init_rag import vector_store
+from backend.ai.rag.knowledge_base import KNOWLEDGE_BASE
+from backend.ai.rag.embeddings import embeber_texto
+from backend.ai.rag.init_rag import vector_store
 
 # obtenemos contexto del RAG automáticamente
 def recuperar_contexto(chunk, vector_store):

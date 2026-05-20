@@ -3,7 +3,7 @@
 ###############################################################################################
 
 import os
-from .chunking import dividir_codigo
+from backend.core.processing.repository.chunking import dividir_codigo
 
 # EXTENSIONES DE ARCHIVOS ANALIZABLES POR LA APLICACIÓN
 EXTENSIONES_VALIDAS = [".py", ".js", ".ts", ".php", ".sql"]

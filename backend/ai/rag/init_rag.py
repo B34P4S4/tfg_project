@@ -1,8 +1,8 @@
 # inicializamos el RAG
 
-from core.rag.embeddings import embeber_texto
-from core.rag.vector_store import VectorStore
-from core.rag.knowledge_base import KNOWLEDGE_BASE
+from backend.ai.rag.embeddings import embeber_texto
+from backend.ai.rag.vector_store import VectorStore
+from backend.ai.rag.knowledge_base import KNOWLEDGE_BASE
 
 vector_store = None
 
