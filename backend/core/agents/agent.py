@@ -5,6 +5,7 @@ from backend.ai.rag.init_rag import init_vector_store
 
 from backend.core.agents.prompt_builder import construir_prompt
 from backend.core.parsing.parser import parsear_salida_IA
+from backend.core.parsing.deduplicator import deduplicar
 from backend.core.processing.vulnerability.processor_vul import modelar_id_vulnerabilidad
 
 from backend.ai.models.client_openAI import analizar_ia1
@@ -46,7 +47,6 @@ def analizar_proyecto(ruta):
             # GEMINI
             parsed_ia2 = parsear_salida_IA(analizar_ia2(prompt))
 
-            
             # MODELADO DE VULNERABILIDADES
             if parsed_ia1.get("1.1"):
 
@@ -58,13 +58,9 @@ def analizar_proyecto(ruta):
                 vuln_ia2 = modelar_id_vulnerabilidad(parsed_ia2,MODELO2, archivo["file"],chunk_id,archivo["lenguaje"])
                 vulnerabilidades.append(vuln_ia2)
 
-    # ----------------------------------------
+    
     # DEDUPLICACIÓN
-    # ----------------------------------------
-    '''
-    vulnerabilidades = deduplicar(
-        vulnerabilidades
-    )'''
+    vulnerabilidades = deduplicar(vulnerabilidades)
 
     # ----------------------------------------
     # SCORING / CONFIANZA

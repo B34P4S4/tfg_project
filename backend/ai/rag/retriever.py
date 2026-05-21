@@ -8,7 +8,7 @@ def recuperar_contexto(chunk, vector_store):
     return vector_store.search(query_vector, k=2)
 
 # obtenemos el contexto manualmente
-def recuperar_contexto_manual(code):
+'''def recuperar_contexto_manual(code):
     context = []
 
     # extraemos el texto
@@ -58,4 +58,4 @@ def recuperar_contexto_manual(code):
     ):
         context.append(KNOWLEDGE_BASE[3])  
 
-    return context
+    return context'''
