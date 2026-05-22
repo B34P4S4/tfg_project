@@ -7,6 +7,7 @@ from backend.core.agents.prompt_builder import construir_prompt
 from backend.core.parsing.parser import parsear_salida_IA
 from backend.core.parsing.deduplicator import deduplicar
 from backend.core.processing.vulnerability.processor_vul import modelar_id_vulnerabilidad
+from backend.core.processing.vulnerability.correlator_vul import correlacionar
 
 from backend.ai.models.client_openAI import analizar_ia1
 from backend.ai.models.client_geminiAI import analizar_ia2
@@ -62,15 +63,11 @@ def analizar_proyecto(ruta):
     # DEDUPLICACIÓN
     vulnerabilidades = deduplicar(vulnerabilidades)
 
-    # ----------------------------------------
-    # SCORING / CONFIANZA
-    # ----------------------------------------
-    '''
-    vulnerabilidades = calcular_confianza(
-        vulnerabilidades
-    )'''
+    # CORRELACIÓN ENTRE VULNERABILIDADES
+    ataques = correlacionar(vulnerabilidades)
 
     return {
         "total_vulnerabilidades": len(vulnerabilidades),
-        "vulnerabilidades": vulnerabilidades
+        "VULNERABILIDADES DETECTADAS": vulnerabilidades,
+        "ATAQUES": ataques
     }
