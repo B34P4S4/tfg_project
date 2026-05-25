@@ -67,7 +67,7 @@ def analizar_proyecto(ruta):
     ataques = correlacionar(vulnerabilidades)
 
     return {
-        "total_vulnerabilidades": len(vulnerabilidades),
-        "VULNERABILIDADES DETECTADAS": vulnerabilidades,
-        "ATAQUES": ataques
-    }
+    "total_vulnerabilidades": len(vulnerabilidades),
+    "vulnerabilidades": vulnerabilidades,
+    "ataques": ataques
+}

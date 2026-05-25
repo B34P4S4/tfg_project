@@ -2,289 +2,108 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VucanAI 2.0</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Cytoscape -->
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    
 
-    <style>
-
-        body{
-            font-family: Arial;
-            background:#0f172a;
-            color:white;
-            margin:0;
-            padding:20px;
-        }
-
-        h1{
-            color:#38bdf8;
-        }
-
-        .container{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:20px;
-        }
-
-        .card{
-            background:#1e293b;
-            border-radius:10px;
-            padding:15px;
-            margin-bottom:10px;
-            border-left:5px solid #38bdf8;
-        }
-
-        .critical{
-            border-left-color:red;
-        }
-
-        .high{
-            border-left-color:orange;
-        }
-
-        .medium{
-            border-left-color:yellow;
-        }
-
-        .low{
-            border-left-color:green;
-        }
-
-        .title{
-            font-size:18px;
-            font-weight:bold;
-        }
-
-        .details{
-            margin-top:10px;
-            color:#cbd5e1;
-        }
-
-        button{
-            background:#38bdf8;
-            border:none;
-            padding:10px;
-            color:black;
-            font-weight:bold;
-            cursor:pointer;
-            border-radius:5px;
-        }
-
-        input{
-            width:400px;
-            padding:10px;
-            margin-right:10px;
-        }
-
-        .attack{
-            border-left:5px solid #ef4444;
-        }
-
-        .accuracy{
-            color:#22c55e;
-            font-weight:bold;
-        }
-
-        .vuln-link{
-            background:#334155;
-            padding:5px;
-            margin:5px 0;
-            border-radius:5px;
-        }
-
-    </style>
 </head>
 
 <body>
 
-    <h1>VucanAI: Detector de vulnerabilidades de código</h1>
+    <h1>VucanAI</h1>
+    <h3>Detección de vulnerabilidades de código con IA agentica multimodelo</h3>
 
-    <input type="text" id="path"
-        value="C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_prueba\testing">
 
-    <button onclick="analizar()">
-        Analizar Proyecto
-    </button>
+<div class="container">
+    <p class="instructions">
+        Introduce la ruta del proyecto y ejecuta el análisis:
+    </p>
+    <div class="search-box">
 
-    <hr>
+        <input
+            type="text"
+            id="ruta"
+            placeholder="Ruta del proyecto..."
+        >
 
-    <div class="container">
+        <button id="btnAnalizar">
+            Analizar
+        </button>
 
-        <div>
-            <h2>Vulnerabilidades</h2>
-            <div id="vulnerabilidades"></div>
+    </div>   
+
+    <div id="loading" class="loading hidden">
+        Procesando análisis...
+    </div>
+
+    <div id="errorBox" class="error hidden"></div>
+
+    <div id="dashboard" class="hidden">
+
+        <div class="tabs">
+
+            <button class="tab active" data-tab="vulnerabilidades">
+                Vulnerabilidades
+            </button>
+
+            <button class="tab" data-tab="ataques">
+                Ataques
+            </button>
+
+            <button class="tab" data-tab="correlaciones">
+                Correlaciones
+            </button>
+
         </div>
 
-        <div>
-            <h2>Ataques Correlacionados</h2>
-            <div id="ataques"></div>
-        </div>
+        <div id="vulnerabilidades" class="tab-content active"></div>
+
+        <div id="ataques" class="tab-content"></div>
+
+        <div id="correlaciones" class="tab-content">
+
+            <div id="correlationGraph"></div>
+            <div id="graphDetails" class="graph-details">
+
+                <h3>Detalles</h3>
+
+                <div id="detailsContent">
+                    Selecciona un nodo...
+                </div>
+
+            </div>
+            <div class="legend">
+
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#2563eb"></div>
+                    Vulnerabilidad
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#dc2626"></div>
+                    Ataque crítico
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-color" style="background:#f59e0b"></div>
+                    Ataque medio
+                </div>
+
+            </div>
+
+        </div>        
 
     </div>
 
-<script>
+</div>
 
-async function analizar(){
-
-    const path = document.getElementById("path").value;
-
-    const response = await fetch("http://127.0.0.1:5000/analiza",{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify({
-            path:path
-        })
-    });
-
-    const data = await response.json();
-
-    console.log(data);
-
-    renderVulnerabilidades(
-        data["VULNERABILIDADES DETECTADAS"]
-    );
-
-    renderAtaques(
-        data["ATAQUES"]["ataques_detectados"]
-    );
-}
-
-function severity(cvss){
-
-    if(cvss >= 9) return "critical";
-    if(cvss >= 7) return "high";
-    if(cvss >= 5) return "medium";
-
-    return "low";
-}
-
-function renderVulnerabilidades(vulns){
-
-    const container = document.getElementById("vulnerabilidades");
-
-    container.innerHTML = "";
-
-    vulns.forEach(v => {
-
-        container.innerHTML += `
-
-        <div class="card ${severity(v.cvss)}">
-
-            <div class="title">
-                ${v.vulnerability}
-            </div>
-
-            <div>
-                CWE-${v.cwe} | CVSS ${v.cvss}
-            </div>
-
-            <div>
-                Archivo:
-                ${v.file}
-            </div>
-
-            <div>
-                Modelo:
-                ${v.modelo}
-            </div>
-
-            <details class="details">
-
-                <summary>Detalles</summary>
-
-                <p>${v.description}</p>
-
-                <p>
-                    CAPEC: ${v.capec}
-                </p>
-
-                <p>
-                    OWASP TOP 10:
-                    ${v.owasp}
-                </p>
-
-                <p>
-                    Source line:
-                    ${v.source}
-                </p>
-
-                <p>
-                    Sink line:
-                    ${v.sink}
-                </p>
-
-            </details>
-
-        </div>
-
-        `;
-    });
-}
-
-function renderAtaques(ataques){
-
-    const container = document.getElementById("ataques");
-
-    container.innerHTML = "";
-
-    ataques.forEach(a => {
-
-        container.innerHTML += `
-
-        <div class="card attack">
-
-            <div class="title">
-                ${a.nombre}
-            </div>
-
-            <div>
-                Resultado:
-                ${a.ataque_resultante}
-            </div>
-
-            <div class="accuracy">
-                Accuracy Attack:
-                ${(a.accuracy_attack * 100).toFixed(1)}%
-            </div>
-
-            <details class="details">
-
-                <summary>Detalles ataque</summary>
-
-                <p>${a.descripcion}</p>
-
-                <h4>Vulnerabilidades relacionadas</h4>
-
-                ${a.vulnerabilidades_involucradas.map(v => `
-
-                    <div class="vuln-link">
-
-                        ${v.vulnerability}
-                        (CWE-${v.cwe})
-
-                        <br>
-
-                        <small>
-                            ${v.file}
-                        </small>
-
-                    </div>
-
-                `).join("")}
-
-            </details>
-
-        </div>
-
-        `;
-    });
-}
-
-</script>
+<script src="js/functions.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,673 @@
+/* =========================================================
+   VUCAN AI 2.0
+   CLEAN DARK UI
+========================================================= */
+
+:root {
+
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-card-hover: #273449;
+
+    --bg-panel: #111827;
+    --bg-graph: #020617;
+
+    --text-main: #ffffff;
+    --text-soft: #cbd5e1;
+    --text-muted: #94a3b8;
+
+    --primary: #2563eb;
+    --primary-light: #60a5fa;
+
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --medium: #eab308;
+    --success: #22c55e;
+
+    --border: #334155;
+
+    --shadow-danger: rgba(220,38,38,0.35);
+    --shadow-warning: rgba(249,115,22,0.28);
+    --shadow-medium: rgba(234,179,8,0.22);
+    --shadow-success: rgba(34,197,94,0.20);
+
+    --radius: 14px;
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+    padding: 0;
+
+    background: var(--bg-main);
+    color: var(--text-main);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+
+    max-width: 1500px;
+
+    margin: auto;
+
+    padding: 30px 20px 60px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   TITLES
+========================================================= */
+
+h1 {
+
+    margin-bottom: 10px;
+
+    text-align: center;
+
+    font-size: 2.5rem;
+
+    color: white;
+}
+
+h3 {
+
+    margin-top: 0;
+    margin-bottom: 30px;
+
+    text-align: center;
+
+    color: var(--primary-light);
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.instructions {
+
+    margin-bottom: 12px;
+
+    text-align: center;
+
+    color: var(--text-soft);
+}
+
+.search-box {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+.search-box input {
+
+    flex: 1;
+
+    padding: 15px 18px;
+
+    border: 1px solid transparent;
+    border-radius: 12px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    font-size: 15px;
+}
+
+.search-box input:focus {
+
+    border-color: var(--primary);
+}
+
+.search-box button {
+
+    padding: 15px 28px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.search-box button:hover {
+
+    opacity: 0.92;
+}
+
+.search-box button:disabled {
+
+    background: #475569;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.loading {
+
+    margin-top: 20px;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background: rgba(37,99,235,0.12);
+
+    border: 1px solid rgba(37,99,235,0.30);
+
+    color: #93c5fd;
+
+    font-weight: bold;
+}
+
+.error {
+
+    margin-top: 20px;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background: rgba(220,38,38,0.15);
+
+    border: 1px solid rgba(220,38,38,0.35);
+
+    color: #fecaca;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.tab {
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--bg-card);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.tab:hover {
+
+    background: #2a3a52;
+}
+
+.tab.active {
+
+    background: var(--primary);
+}
+
+
+/* =========================================================
+   TAB CONTENT
+========================================================= */
+
+.tab-content {
+
+    display: none;
+
+    margin-top: 24px;
+
+    min-height: 400px;
+}
+
+.tab-content.active {
+
+    display: block;
+}
+
+
+/* =========================================================
+   CARD BASE
+========================================================= */
+
+.card {
+
+    background: var(--bg-card);
+
+    border-radius: var(--radius);
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.card:hover {
+
+    transform: translateY(-2px);
+
+    background: var(--bg-card-hover);
+}
+
+
+/* =========================================================
+   CARD SEVERITY
+========================================================= */
+
+.card-critical {
+
+    border-left: 7px solid var(--danger);
+
+    box-shadow: 0 0 14px var(--shadow-danger);
+}
+
+.card-high {
+
+    border-left: 7px solid var(--warning);
+
+    box-shadow: 0 0 12px var(--shadow-warning);
+}
+
+.card-medium {
+
+    border-left: 7px solid var(--medium);
+
+    box-shadow: 0 0 12px var(--shadow-medium);
+}
+
+.card-low {
+
+    border-left: 7px solid var(--success);
+
+    box-shadow: 0 0 12px var(--shadow-success);
+}
+
+
+/* =========================================================
+   CARD HEADERS
+========================================================= */
+
+.card-header {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.card-title,
+.vuln-title {
+
+    font-size: 1.05rem;
+
+    font-weight: 700;
+
+    color: white;
+}
+
+.card-subtitle,
+.vuln-meta {
+
+    color: var(--text-muted);
+
+    font-size: 0.92rem;
+}
+
+.vuln-file {
+
+    color: #8ea0bd;
+
+    font-size: 0.88rem;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   SOURCE -> SINK
+========================================================= */
+
+.vuln-flow {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 0.92rem;
+
+    color: var(--text-soft);
+}
+
+.flow-label {
+
+    color: #7aa2ff;
+
+    font-weight: bold;
+}
+
+.flow-arrow {
+
+    color: #ffcc66;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   ATTACK RESULT BADGE
+========================================================= */
+
+.attack-result {
+
+    display: inline-block;
+
+    margin-top: 14px;
+
+    padding: 8px 14px;
+
+    border-radius: 10px;
+
+    background: rgba(37,99,235,0.14);
+
+    border: 1px solid rgba(37,99,235,0.30);
+
+    color: #93c5fd;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details-box,
+details {
+
+    margin-top: 16px;
+
+    border-top: 1px solid var(--border);
+
+    padding-top: 14px;
+}
+
+summary {
+
+    cursor: pointer;
+
+    color: #8ab4ff;
+
+    font-weight: 600;
+
+    transition: 0.15s;
+}
+
+summary:hover {
+
+    color: #b6ccff;
+}
+
+.details-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-top: 16px;
+}
+
+.details-content p {
+
+    margin: 0;
+
+    line-height: 1.6;
+
+    color: var(--text-soft);
+}
+
+.details-content ul {
+
+    margin: 0;
+
+    padding-left: 22px;
+}
+
+.details-content li {
+
+    margin-bottom: 7px;
+
+    color: var(--text-soft);
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    background: var(--bg-card);
+
+    text-align: center;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   GRAPH
+========================================================= */
+
+#correlationGraph {
+
+    width: 100%;
+
+    height: 820px;
+
+    margin-top: 20px;
+
+    border-radius: 18px;
+
+    border: 1px solid #1e293b;
+
+    background:
+        radial-gradient(circle at center,
+        #111827 0%,
+        #020617 100%);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   GRAPH DETAILS
+========================================================= */
+
+.graph-details {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    background: var(--bg-panel);
+
+    border: 1px solid var(--border);
+}
+
+.graph-details h3 {
+
+    margin-top: 0;
+
+    margin-bottom: 15px;
+
+    color: var(--primary-light);
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.legend {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin-top: 18px;
+}
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--text-soft);
+}
+
+.legend-color {
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   CYTOSCAPE TOOLTIP
+========================================================= */
+
+.cy-tooltip {
+
+    position: absolute;
+
+    z-index: 9999;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    background: rgba(0,0,0,0.92);
+
+    color: white;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    #correlationGraph {
+
+        height: 620px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .tabs {
+
+        flex-direction: column;
+    }
+
+    .search-box {
+
+        flex-direction: column;
+    }
+
+    .search-box button {
+
+        width: 100%;
+    }
+
+    #correlationGraph {
+
+        height: 520px;
+    }
+
+    .container {
+
+        padding: 20px 14px 40px;
+    }
+
+    h1 {
+
+        font-size: 2rem;
+    }
+}
