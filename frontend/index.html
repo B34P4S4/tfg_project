@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VucanAI 2.0</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="css/styles.css">
     <!-- Cytoscape -->
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
@@ -46,20 +46,28 @@
 
     <div id="dashboard" class="hidden">
 
-        <div class="tabs">
+        <div class="top-bar">
 
-            <button class="tab active" data-tab="vulnerabilidades">
-                Vulnerabilidades
+            <div class="tabs">
+
+                <button class="tab active" data-tab="vulnerabilidades">
+                    Vulnerabilidades
+                </button>
+
+                <button class="tab" data-tab="ataques">
+                    Ataques
+                </button>
+
+                <button class="tab" data-tab="correlaciones">
+                    Correlaciones
+                </button>
+
+            </div>
+
+            <button id="btnExportar" class="export-btn hidden">
+                Exportar Informe PDF
             </button>
-
-            <button class="tab" data-tab="ataques">
-                Ataques
-            </button>
-
-            <button class="tab" data-tab="correlaciones">
-                Correlaciones
-            </button>
-
+            
         </div>
 
         <div id="vulnerabilidades" class="tab-content active"></div>
@@ -69,6 +77,19 @@
         <div id="correlaciones" class="tab-content">
 
             <div id="correlationGraph"></div>
+            <div class="legend">
+
+                <div class="legend-item">
+                    <div class="vul-color"></div>
+                    Vulnerabilidad
+                </div>
+
+                <div class="legend-item">
+                    <div class="attack-color"></div>
+                    Ataque
+                </div>                
+
+            </div>
             <div id="graphDetails" class="graph-details">
 
                 <h3>Detalles</h3>
@@ -77,25 +98,7 @@
                     Selecciona un nodo...
                 </div>
 
-            </div>
-            <div class="legend">
-
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#2563eb"></div>
-                    Vulnerabilidad
-                </div>
-
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#dc2626"></div>
-                    Ataque crítico
-                </div>
-
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#f59e0b"></div>
-                    Ataque medio
-                </div>
-
-            </div>
+            </div>            
 
         </div>        
 

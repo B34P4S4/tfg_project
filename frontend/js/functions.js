@@ -5,6 +5,10 @@ const btn = document.getElementById("btnAnalizar")
 let cy = null
 btn.addEventListener("click", analizar)
 
+const btnExportar = document.getElementById("btnExportar")
+let ultimoResultado = null
+btnExportar.addEventListener("click", exportarPDF)
+
 
 // TABS
 document.querySelectorAll(".tab").forEach(tab => {
@@ -36,6 +40,56 @@ document.querySelectorAll(".tab").forEach(tab => {
     })
 })
 
+async function exportarPDF() {
+
+    if (!ultimoResultado) {
+        alert("No hay resultados")
+        return
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/exportar",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(ultimoResultado)
+            }
+        )
+
+        if (!response.ok) {
+
+            const err = await response.json()
+            console.error(err)
+
+            alert(err.error || "Error exportando PDF")
+            return
+        }
+
+        const blob = await response.blob()
+
+        const url = window.URL.createObjectURL(blob)
+
+        const a = document.createElement("a")
+
+        a.href = url
+        //a.download = "VucanAI_Report.pdf"
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        window.URL.revokeObjectURL(url)
+
+    } catch(e) {
+
+        console.error(e)
+        alert("Error exportando PDF")
+    }
+}
 
 async function analizar() {
 
@@ -59,6 +113,7 @@ async function analizar() {
 
     loading.classList.remove("hidden")
     dashboard.classList.add("hidden")
+    btnExportar.classList.add("hidden")
 
     try {
 
@@ -81,7 +136,7 @@ async function analizar() {
 
             errorBox.innerText = data.error
             errorBox.classList.remove("hidden")
-
+            btnExportar.classList.add("hidden")
             return
         }
 
@@ -96,6 +151,11 @@ async function analizar() {
 
         loading.classList.add("hidden")
 
+        // BOTON EXPORTAR
+        ultimoResultado = data
+        btnExportar.classList.remove("hidden")
+        btnExportar.disabled = false       
+
     }
 
     catch (e) {
@@ -103,6 +163,7 @@ async function analizar() {
         console.error("ERROR REAL:", e)
         errorBox.innerText = e.message || "Error conectando con backend"
         errorBox.classList.remove("hidden")
+        btnExportar.classList.add("hidden")
     }
 
     finally {
@@ -129,6 +190,85 @@ function getSeverityClass(cvss) {
     return "card-low"
 }
 
+/******************************************* */
+/* VULNERABILIDADES ***************************/
+/******************************************* */
+
+function obtenerCategoria(numero) {
+  const categorias = {
+    1: "A01:2025 - Broken Access Control",
+    2: "A02:2025 - Security Misconfiguration",
+    3: "A03:2025 - Software Supply Chain Failures",
+    4: "A04:2025 - Cryptographic Failures",
+    5: "A05:2025 - Injection",
+    6: "A06:2025 - Insecure Design",
+    7: "A07:2025 - Authentication Failures",
+    8: "A08:2025 - Software or Data Integrity Failures",
+    9: "A09:2025 - Security Logging and Alerting Failures",
+    10: "A10:2025 - Mishandling of Exceptional Conditions"
+  };
+
+  return categorias[numero] || "Número no válido";
+}
+
+function obtenerEnlaceOWASP(numero) {
+  const enlaces = {
+    1: "https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/",
+    2: "https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/",
+    3: "https://owasp.org/Top10/2025/A03_2025-Software_Supply_Chain_Failures/",
+    4: "https://owasp.org/Top10/2025/A04_2025-Cryptographic_Failures/",
+    5: "https://owasp.org/Top10/2025/A05_2025-Injection/",
+    6: "https://owasp.org/Top10/2025/A06_2025-Insecure_Design/",
+    7: "https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/",
+    8: "https://owasp.org/Top10/2025/A08_2025-Software_or_Data_Integrity_Failures/",
+    9: "https://owasp.org/Top10/2025/A09_2025-Security_Logging_and_Alerting_Failures/",
+    10: "https://owasp.org/Top10/2025/A10_2025-Mishandling_of_Exceptional_Conditions/"
+  };
+
+  return enlaces[numero] || "https://owasp.org/Top10/2025/";
+}
+
+function obtenerEnlaceCWE(cwe){
+    if (!cwe) {
+        return "";
+    }else{
+        return `https://cwe.mitre.org/data/definitions/${cwe}.html`;
+    }    
+}
+
+function convertirMitreLinks(texto) {
+
+    // Técnica
+    texto = texto.replace(
+        /(T\d{4})\s+([^:]+?)(?=\s*:|$)/g,
+        (_, tecnica, descripcion) => {
+
+            return `
+                <a href="https://attack.mitre.org/techniques/${tecnica}/" target="_blank">
+                    ${tecnica}
+                </a>
+                ${descripcion.trim()}
+            `
+        }
+    )
+
+    // Táctica
+    texto = texto.replace(
+        /(TA\d{4})\s+(.+)$/g,
+        (_, tactica, descripcion) => {
+
+            return `
+                <a href="https://attack.mitre.org/tactics/${tactica}/" target="_blank">
+                    ${tactica}
+                </a>
+                ${descripcion.trim()}
+            `
+        }
+    )
+
+    return texto
+}
+
 function renderVulnerabilidades(vulnerabilidades) {
 
     const container = document.getElementById("vulnerabilidades")
@@ -153,13 +293,20 @@ function renderVulnerabilidades(vulnerabilidades) {
         else if (cvss >= 7) severity = "card-high"
         else if (cvss >= 4) severity = "card-medium"
 
+        const cvss_string = severity.replace("card-", "").toUpperCase();
+
         const mitre = Array.isArray(v.mitre)
-            ? v.mitre.map(m => `<li>${m}</li>`).join("")
+            ? v.mitre.map(m => `<li>${convertirMitreLinks(m)}</li>`).join("")
             : "<li>N/A</li>"
 
         const capecs = Array.isArray(v.capecs)
-            ? v.capecs.join(", ")
-            : (v.capec || "N/A")
+            ? v.capecs.map(c => `<a href="https://capec.mitre.org/data/definitions/${c}.html" target="_blank">${c}</a>`).join(",")
+            : v.capec ? `<a href="https://capec.mitre.org/data/definitions/${v.capec}.html" target="_blank">${v.capec}</a>`: "N/A";
+
+        const enlace_owasp = obtenerEnlaceOWASP(v.owasp)
+        const owasp = obtenerCategoria(v.owasp)
+
+        const enlace_cwe = obtenerEnlaceCWE(v.cwe)
 
         return `
 
@@ -173,8 +320,8 @@ function renderVulnerabilidades(vulnerabilidades) {
                 </div>
 
                 <div class="vuln-meta">
-                    CWE-${v.cwe || "N/A"} |
-                    CVSS ${v.cvss || "N/A"}/10
+                    <a href="${enlace_cwe}" target="_blank">CWE-${v.cwe || "N/A"}</a> |
+                    CVSS ${v.cvss || "N/A"}/10 ${cvss_string}
                 </div>
 
                 <div class="vuln-file">
@@ -182,12 +329,12 @@ function renderVulnerabilidades(vulnerabilidades) {
                 </div>
 
                 <div class="vuln-flow">
-                    <span class="flow-label">From:</span>
+                    <span class="flow-label">Desde la línea:</span>
                     ${v.source || "N/A"}
 
                     <span class="flow-arrow">→</span>
 
-                    <span class="flow-label">To:</span>
+                    <span class="flow-label">hasta la línea:</span>
                     ${v.sink || "N/A"}
                 </div>
 
@@ -217,7 +364,7 @@ function renderVulnerabilidades(vulnerabilidades) {
 
                     <p>
                         <strong>OWASP:</strong>
-                        A${String(v.owasp || "N/A").padStart(2, "0")}:2025
+                        <a href="${enlace_owasp}" target="_blank">${owasp}</a>
                     </p>
 
                     <p>
@@ -262,12 +409,30 @@ function renderAtaques(ataquesData) {
 
     div.innerHTML = ataques.map(a => {
 
-        const severity = getSeverityClass(
-            (a.accuracy_attack / 100) * 10
-        )
+        const accuracy_value = (a.accuracy_attack || 0) * 100
+
+        let accuracy = "card-low"
+
+        if (accuracy_value >= 90) {
+            accuracy = "card-critical"
+        }
+        else if (accuracy_value >= 60) {
+            accuracy = "card-high"
+        }
+        else if (accuracy_value >= 40) {
+            accuracy = "card-medium"
+        }
+
+        const accuracy_attack = Math.round(accuracy_value * 100) / 100
+
+        const capecs = Array.isArray(a.capec)
+            ? a.capec.map(c => `<a href="https://capec.mitre.org/data/definitions/${c.id}.html" target="_blank">${c.id}</a>`).join(",")
+            : (a.capec || "N/A")
+        
+        
 
         return `
-        <div class="card attack-card ${severity}">
+        <div class="card attack-card ${accuracy}">
 
             <div class="card-header">
 
@@ -277,7 +442,7 @@ function renderAtaques(ataquesData) {
                     </div>
 
                     <div class="card-subtitle">
-                        Exactitud: ${a.accuracy_attack}%
+                        Precisión: ${accuracy_attack}%  
                     </div>
                 </div>
 
@@ -300,7 +465,7 @@ function renderAtaques(ataquesData) {
 
                     <p>
                         <strong>CAPECs:</strong>
-                        ${a.capec.map(c => `CAPEC-${c.id}`).join(", ")}
+                        ${capecs}
                     </p>
 
                     <p>
@@ -308,9 +473,9 @@ function renderAtaques(ataquesData) {
                     </p>
 
                     <ul>
-                        ${a.vulnerabilidades_involucradas.map(v => `
+                        ${(a.vulnerabilidades_involucradas || []).map(v => `
                             <li>
-                                ${v.vulnerability} (CWE-${v.cwe})
+                                ${v.vulnerability} (<a href="${obtenerEnlaceCWE(v.cwe)}" target="_blank">CWE-${v.cwe || "N/A"}</a>) <span class="flow-arrow">→</span> Ruta:${v.file}
                             </li>
                         `).join("")}
                     </ul>
@@ -333,7 +498,7 @@ function renderGrafico(ataques) {
 
         const attackId = `attack_${attackIndex}`
 
-        const accuracy = ataque.accuracy_attack || 0
+        const accuracy = (ataque.accuracy_attack || 0) * 100
 
         // COLOR SEGÚN EXACTITUD
         let attackColor = "#22c55e"
@@ -351,17 +516,12 @@ function renderGrafico(ataques) {
             data: {
 
                 id: attackId,
-
                 label: ataque.nombre,
-
                 type: "attack",
-
                 color: attackColor,
-
                 accuracy: accuracy,
-
+                capec: ataque.capec,
                 descripcion: ataque.descripcion,
-
                 resultado: ataque.ataque_resultante
             }
         })
@@ -530,16 +690,18 @@ function renderGrafico(ataques) {
 
         const details = document.getElementById("detailsContent")
 
+        const capecs_detail = Array.isArray(data.capec)
+            ? data.capec.map(c => `<a href="https://capec.mitre.org/data/definitions/${c.id}.html" target="_blank">${c.id}</a>`).join(",")
+            : (data.capec || "N/A")
+
         if (data.type === "attack") {
 
             details.innerHTML = `
 
                 <h4>${data.label}</h4>
-
                 <p><b>Resultado:</b> ${data.resultado}</p>
-
-                <p><b>Exactitud:</b> ${data.accuracy}%</p>
-
+                <p><b>Precisión:</b> ${data.accuracy}%</p>
+                <p><b>CAPEC:</b> ${capecs_detail}</p>
                 <p><b>Descripción:</b> ${data.descripcion}</p>
             `
         }
@@ -549,16 +711,11 @@ function renderGrafico(ataques) {
             details.innerHTML = `
 
                 <h4>${data.label}</h4>
-
                 <p><b>CWE:</b> ${data.cwe}</p>
-
                 <p><b>CVSS:</b> ${data.cvss}</p>
-
-                <p><b>Impacto:</b> ${data.impact}</p>
-
-                <p><b>Probabilidad:</b> ${data.probability}</p>
-
-                <p><b>Archivo:</b> ${data.file}</p>
+                <p><b>Impacto:</b> ${data.impact}/5</p>
+                <p><b>Probabilidad:</b> ${data.probability}/5</p>
+                <p><b>Ruta:</b> ${data.file}</p>
             `
         }
     })

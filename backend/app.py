@@ -3,9 +3,10 @@ load_dotenv()
 
 import os
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from backend.core.agents.agent import analizar_proyecto
+from backend.core.reporting.reporter import generar_reporte_pdf
 
 app = Flask(__name__)
 CORS(app)
@@ -34,6 +35,31 @@ def analiza():
         resultados = analizar_proyecto(ruta)
 
         return jsonify(resultados)
+
+    except Exception as e:
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
+@app.route("/exportar", methods=["POST"])
+def exportar():
+
+    try:
+
+        data = request.get_json()
+
+        if not data:
+            return jsonify({
+                "error": "No hay datos"
+            }), 400
+
+        pdf_path = generar_reporte_pdf(data)
+
+        return send_file(
+            pdf_path,
+            as_attachment=True
+        )
 
     except Exception as e:
 
