@@ -648,13 +648,31 @@ summary:hover {
     background: #2563eb;
 }
 
-.attack-color {
+.attack-color_low {
 
     width: 18px;
     height: 18px;
     border-radius: 0;
     transform: rotate(45deg);
     background: #12dd45;
+}
+
+.attack-color_high {
+
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
+    transform: rotate(45deg);
+    background: #f59e0b;
+}
+
+.attack-color_critical {
+
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
+    transform: rotate(45deg);
+    background: #dc2626;
 }
 
 

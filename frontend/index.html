@@ -17,7 +17,7 @@
 <body>
 
     <h1>VucanAI</h1>
-    <h3>Detección de vulnerabilidades de código con IA agentica multimodelo</h3>
+    <h3>Detección de vulnerabilidades de código con IA agéntica multimodelo</h3>
 
 
 <div class="container">
@@ -79,15 +79,20 @@
             <div id="correlationGraph"></div>
             <div class="legend">
 
-                <div class="legend-item">
+                <div class="legend-item">          
                     <div class="vul-color"></div>
-                    Vulnerabilidad
+                    Vulnerabilidades
                 </div>
 
                 <div class="legend-item">
-                    <div class="attack-color"></div>
-                    Ataque
-                </div>                
+                     Ataques detectados con precisión:
+                    <div class="attack-color_low"></div>
+                     baja              
+                    <div class="attack-color_high"></div>
+                     media               
+                    <div class="attack-color_critical"></div>
+                     alta, tras correlacionar vulnerabilidades.
+                </div>
 
             </div>
             <div id="graphDetails" class="graph-details">

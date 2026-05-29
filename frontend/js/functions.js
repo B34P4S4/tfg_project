@@ -540,21 +540,13 @@ function renderGrafico(ataques) {
                 data: {
 
                     id: vulnId,
-
                     label: vuln.vulnerability,
-
                     type: "vulnerability",
-
                     cvss: cvss,
-
                     cwe: vuln.cwe,
-
                     impact: vuln.impact,
-
                     probability: vuln.probability,
-
                     file: vuln.file,
-
                     size: size
                 }
             })
@@ -565,7 +557,6 @@ function renderGrafico(ataques) {
                 data: {
 
                     source: vulnId,
-
                     target: attackId
                 }
             })
@@ -587,27 +578,16 @@ function renderGrafico(ataques) {
                 style: {
 
                     'background-color': '#2563eb',
-
                     'label': 'data(label)',
-
                     'color': 'white',
-
                     'font-size': '10px',
-
                     'text-wrap': 'wrap',
-
                     'text-max-width': '80px',
-
                     'text-valign': 'center',
-
                     'text-halign': 'center',
-
                     'width': 'data(size)',
-
                     'height': 'data(size)',
-
                     'border-width': 2,
-
                     'border-color': '#60a5fa'
                 }
             },
@@ -619,31 +599,18 @@ function renderGrafico(ataques) {
                 style: {
 
                     'background-color': 'data(color)',
-
                     'label': 'data(label)',
-
                     'shape': 'diamond',
-
                     'color': 'white',
-
                     'font-size': '12px',
-
                     'font-weight': 'bold',
-
                     'text-wrap': 'wrap',
-
                     'text-max-width': '120px',
-
                     'text-valign': 'center',
-
                     'text-halign': 'center',
-
                     'width': 90,
-
                     'height': 90,
-
                     'border-width': 3,
-
                     'border-color': '#ffffff'
                 }
             },
@@ -655,15 +622,10 @@ function renderGrafico(ataques) {
                 style: {
 
                     'width': 2,
-
                     'line-color': '#64748b',
-
                     'target-arrow-color': '#64748b',
-
                     'target-arrow-shape': 'triangle',
-
                     'curve-style': 'bezier',
-
                     'opacity': 0.8
                 }
             }
@@ -672,13 +634,9 @@ function renderGrafico(ataques) {
         layout: {
 
             name: 'cose',
-
             animate: true,
-
             nodeRepulsion: 800000,
-
             idealEdgeLength: 150,
-
             gravity: 0.25
         }
     })
