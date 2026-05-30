@@ -1,20 +1,21 @@
-import os
 from openai import OpenAI
+from backend.config import OPENAI_API_KEY,OPENAI_MODEL,TIMEOUT_OPENAI
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=OPENAI_API_KEY)
+print("OPENAI_MODEL =", OPENAI_MODEL)
+
 
 def analizar_ia1(prompt):
    
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OPENAI_MODEL,
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"},
-            timeout=30  # lanzamos consulta a OpenAI cada 30 segundos
+            timeout=TIMEOUT_OPENAI  # lanzamos consulta a OpenAI cada 30 segundos
         )
 
-        print("Respuesta recibida")
-
+        print("Respuesta recibida de OpenAI")
         return response.choices[0].message.content
 
     except Exception as e:

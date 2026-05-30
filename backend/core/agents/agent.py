@@ -1,3 +1,4 @@
+from backend.config import MODELO1,MODELO2
 from backend.core.processing.repository.processor import procesar_proyecto
 
 from backend.ai.rag.retriever import recuperar_contexto
@@ -16,9 +17,6 @@ from backend.ai.models.client_geminiAI import analizar_ia2
 # inicializamos RAG 
 vector_store = init_vector_store()
 print("VECTOR STORE agent:", vector_store)
-
-MODELO1 = "openAI"
-MODELO2 = "gemini"
 
 # --------------------------------------------
 # PIPELINE PRINCIPAL

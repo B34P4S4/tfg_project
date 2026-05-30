@@ -9,7 +9,7 @@ Características:
 - API REST con Flask
 - Soporte para múltiples fuentes de conocimiento
 
-Tecnologías utilizadas
+Tecnologías utilizadas:
 - Python 3.10
 - Flask
 - sentence-transformers
@@ -18,15 +18,15 @@ Tecnologías utilizadas
 - OpenAI API
 
 Se requiere instalar las librerías con el comando:
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 Y si da problemas es recomendable instalar por partes:
-pip install --upgrade pip
-pip install numpy==1.26.4
-pip install torch==2.2.2
-pip install -r requirements.txt
+- pip install --upgrade pip
+- pip install numpy==1.26.4
+- pip install torch==2.2.2
+- pip install -r requirements.txt
 
 Para ejecutar:
-git clone ...
-docker build -t vucan-backend . 
-docker run -p 5000:5000 --env-file .env -v "RUTA_COMPLETA_DEL_PROYECTO_A_ANALIZAR" vucan-backend
+- git clone ...
+- docker build -t vucan-backend . 
+- docker run -p 5000:5000 --env-file .env -v "RUTA_COMPLETA_DEL_PROYECTO_A_ANALIZAR" vucan-backend
