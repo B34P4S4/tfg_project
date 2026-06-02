@@ -6,6 +6,8 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from backend.core.agents.agent import analizar_proyecto
 from backend.core.reporting.reporter import generar_reporte_pdf
+from backend.storage.repository import obtener_ultimos_analisis, obtener_analisis, obtener_ataques, obtener_vulnerabilidades
+
 
 app = Flask(__name__)
 CORS(app)
@@ -66,6 +68,42 @@ def exportar():
             "error": str(e)
         }), 500
 
+@app.route("/analisis", methods=["GET"])
+def listar_analisis():
+
+    try:
+
+        return jsonify(
+            obtener_ultimos_analisis()
+        )
+
+    except Exception as e:
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
+@app.route("/analisis/<int:analisis_id>", methods=["GET"])
+def cargar_analisis(analisis_id):
+    
+    try:
+
+        vulnerabilidades = obtener_vulnerabilidades(analisis_id)
+        ataques = obtener_ataques(analisis_id)
+
+        return jsonify({
+            "vulnerabilidades": vulnerabilidades,
+            "ataques": {
+                "ataques_detectados": ataques,
+                "total_ataques": len(ataques)
+            }
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "error": str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(debug=DEBUG, host=HOST, port=PORT)

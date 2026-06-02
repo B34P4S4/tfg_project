@@ -66,6 +66,8 @@ def construir_prompt(context, code, file_path=None, lenguaje=None):
     - No incluyas texto fuera del JSON.
     - No incluyas Markdown ni bloques de código.
     - No incluyas comentarios.
+    - Escapa todas las barras invertidas según la especificación JSON.
+    - No incluyas rutas Windows con '\' sin escapar.
     - Usa únicamente los tipos indicados (boolean, number, string, array).
     - Los números deben ir sin comillas.
     - Si no aplica algún campo, devuelve un valor razonable (por ejemplo, 0 o lista vacía).

@@ -1,15 +1,16 @@
 from backend.config import MODELO1,MODELO2
+
 from backend.core.processing.repository.processor import procesar_proyecto
-
-from backend.ai.rag.retriever import recuperar_contexto
-from backend.ai.rag.init_rag import init_vector_store
-
+from backend.core.processing.vulnerability.processor_vul import modelar_id_vulnerabilidad
+from backend.core.processing.vulnerability.correlator_vul import correlacionar
 from backend.core.agents.prompt_builder import construir_prompt
 from backend.core.parsing.parser import parsear_salida_IA
 from backend.core.parsing.deduplicator import deduplicar
-from backend.core.processing.vulnerability.processor_vul import modelar_id_vulnerabilidad
-from backend.core.processing.vulnerability.correlator_vul import correlacionar
+from backend.storage.repository import guardar_analisis
+from backend.testing.test_db import test_resultados_bd
 
+from backend.ai.rag.retriever import recuperar_contexto
+from backend.ai.rag.init_rag import init_vector_store
 from backend.ai.models.client_openAI import analizar_ia1
 from backend.ai.models.client_geminiAI import analizar_ia2
 
@@ -63,6 +64,9 @@ def analizar_proyecto(ruta):
 
     # CORRELACIÓN ENTRE VULNERABILIDADES
     ataques = correlacionar(vulnerabilidades)
+    
+    guardar_analisis(ruta, vulnerabilidades, ataques)
+    test_resultados_bd()
 
     return {
     "total_vulnerabilidades": len(vulnerabilidades),

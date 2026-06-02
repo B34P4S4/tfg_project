@@ -1,6 +1,6 @@
 // JAVASCRIP CON LAS FUNCIONES DEL FRONTEND
-
 const API = "http://127.0.0.1:5000/analiza"
+const API_ANALISIS = "http://127.0.0.1:5000/analisis"
 const btn = document.getElementById("btnAnalizar")
 let cy = null
 btn.addEventListener("click", analizar)
@@ -143,16 +143,16 @@ async function analizar() {
         dashboard.classList.remove("hidden")
         renderVulnerabilidades(data.vulnerabilidades)
         renderAtaques(data.ataques)
-        console.log("ataques correlados:", data.ataques.ataques_detectados)
-        
+
         setTimeout(() => {
-            renderGrafico(data.ataques.ataques_detectados)
+            renderGrafico(data.ataques)
         }, 50)
 
         loading.classList.add("hidden")
 
         // BOTON EXPORTAR
         ultimoResultado = data
+        await cargarHistoricoAnalisis()
         btnExportar.classList.remove("hidden")
         btnExportar.disabled = false       
 
@@ -271,6 +271,8 @@ function convertirMitreLinks(texto) {
 
 function renderVulnerabilidades(vulnerabilidades) {
 
+    console.log("RENDER VULNERABILIDADES:", vulnerabilidades)
+
     const container = document.getElementById("vulnerabilidades")
 
     if (!vulnerabilidades || vulnerabilidades.length === 0) {
@@ -305,8 +307,11 @@ function renderVulnerabilidades(vulnerabilidades) {
 
         const enlace_owasp = obtenerEnlaceOWASP(v.owasp)
         const owasp = obtenerCategoria(v.owasp)
-
         const enlace_cwe = obtenerEnlaceCWE(v.cwe)
+
+        const mitigation = Array.isArray(v.mitigation)
+            ? v.mitigation.map(i => `<li>${i}</li>`).join("")
+            : "<li>N/A</li>"
 
         return `
 
@@ -382,6 +387,16 @@ function renderVulnerabilidades(vulnerabilidades) {
 
                     </div>
 
+                    <div class="mitigation-section">
+
+                        <strong>MEDIDAS DE MITIGACIÓN:</strong>
+
+                        <ul>
+                            ${mitigation}
+                        </ul>
+
+                    </div>
+
                 </div>
 
             </details>
@@ -391,9 +406,32 @@ function renderVulnerabilidades(vulnerabilidades) {
     }).join("")
 }
 
+function normalizarAtaques(ataquesData) {
+
+    if (!ataquesData) return []
+
+    // caso 1: formato nuevo
+    if (Array.isArray(ataquesData?.ataques_detectados)) {
+        return ataquesData.ataques_detectados
+    }
+
+    // caso 2: array directo limpio
+    if (Array.isArray(ataquesData)) {
+
+        // si es [array, numero] nos quedamos con el primero
+        if (Array.isArray(ataquesData[0])) {
+            return ataquesData[0]
+        }
+
+        return ataquesData
+    }
+
+    return []
+}
+
 function renderAtaques(ataquesData) {
 
-    const ataques = ataquesData.ataques_detectados
+    let ataques = normalizarAtaques(ataquesData)
 
     const div = document.getElementById("ataques")
 
@@ -429,8 +467,6 @@ function renderAtaques(ataquesData) {
             ? a.capec.map(c => `<a href="https://capec.mitre.org/data/definitions/${c.id}.html" target="_blank">${c.id}</a>`).join(",")
             : (a.capec || "N/A")
         
-        
-
         return `
         <div class="card attack-card ${accuracy}">
 
@@ -490,8 +526,10 @@ function renderAtaques(ataquesData) {
 }
 
 // funcion para el dibujo de red de correlacion entre vulnerabilidades propinando ataques
-function renderGrafico(ataques) {
+function renderGrafico(ataquesData) {
 
+    let ataques = normalizarAtaques(ataquesData)
+    console.log("NORMALIZADO:", ataques)
     const elements = []
 
     ataques.forEach((ataque, attackIndex) => {
@@ -690,3 +728,122 @@ function renderGrafico(ataques) {
         e.target.style('border-width', '2px')
     })
 }
+
+// CARGAR ULTIMOS ANALISIS
+async function cargarHistoricoAnalisis() {
+
+    console.log("Cargando históricos analisis")
+    try {
+
+        const response = await fetch(API_ANALISIS)
+        console.log(response)
+        const data = await response.json()
+        console.log("DATOS HISTORICO RECUPERADOS: "+data)
+        renderHistorico(data)
+    }
+    catch(e) {
+
+        console.error("ERROR CARGAR HISTORICO ANALISIS "+e)
+    }
+}
+
+// MOSTRAMOS LOS ULTIMOS ANALISIS
+function renderHistorico(lista) {
+
+    console.log("renderHistorico"+lista)
+
+    const div =
+        document.getElementById(
+            "listaAnalisis"
+        )
+
+    if (!lista || lista.length === 0) {
+
+        div.innerHTML =
+            "<p>No hay análisis previos</p>"
+
+        return
+    }
+
+    div.innerHTML = lista.map(a => `
+
+        <div
+            class="analysis-item"
+            onclick="cargarAnalisis(${a.id})"
+        >
+
+            <strong>
+                #${a.id}
+            </strong>
+
+            <br>
+
+            ${a.fecha}
+
+            <br>
+
+            Vulns:
+            ${a.total_vulnerabilidades}
+
+            |
+
+            Ataques:
+            ${a.total_ataques}
+
+        </div>
+
+    `).join("")
+}
+
+//MOSTRAMOS ANALISIS SELECCIONADO
+async function cargarAnalisis(id) {
+
+    console.log("Cargando ANALISIS..."+id)
+    const dashboard = document.getElementById("dashboard")
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_ANALISIS}/${id}`
+            )
+
+        const data = await response.json()
+        console.log("DATA RECIBIDA:")
+        console.log(data)
+
+        dashboard.classList.remove("hidden")
+
+        renderVulnerabilidades(data.vulnerabilidades)
+
+        console.log("RAW HISTORICO ATAQUES:", data.ataques)
+        console.log("FULL DATA:", data)
+        console.log("TIPO:", typeof data.ataques)
+        console.log("ES ARRAY:", Array.isArray(data.ataques))
+
+        renderAtaques(data.ataques)
+
+        setTimeout(() => {
+            renderGrafico(data.ataques)
+        }, 50)
+
+        ultimoResultado = data
+        await cargarHistoricoAnalisis()
+
+        btnExportar.classList.remove(
+            "hidden"
+        )
+    }
+    catch(e) {
+
+        console.error("ERROR CARGANDO ANALISIS: "+e)
+    }
+}
+
+// CARGA ULTIMOS ANALISIS AL CARGAR LA PAGINA
+window.addEventListener("load", () => {
+
+    console.log("Cargando históricos...")
+    cargarHistoricoAnalisis()
+
+})

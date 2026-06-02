@@ -26,3 +26,6 @@ gemini_model: gemini-2.5-flash
 timeout_openai: 20
 timeout_gemini: 10
 
+# BASE DE DATOS
+DB_NAME: vucanAI_bd
+

@@ -765,3 +765,29 @@ a:hover {
         font-size: 2rem;
     }
 }
+
+/* =========================================================
+   HISTORIAL DE ANALISIS
+========================================================= */
+
+.history-panel {
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.analysis-item {
+
+    padding: 10px;
+    margin-bottom: 8px;
+
+    border: 1px solid #444;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.analysis-item:hover {
+
+    background: #222;
+}
