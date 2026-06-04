@@ -369,10 +369,8 @@ def obtener_ataques(analisis_id):
                 "impact": vuln["impacto"],
                 "probability": vuln["probabilidad"]
             })
-            
-        print("CAPEC =", ataque["capec"])
-        print("TIPO =", type(ataque["capec"]))
-
+        
+       
         ataques.append({
             "id": ataque_id,
             "nombre": ataque["nombre"],

@@ -49,7 +49,7 @@ def exportar():
     try:
 
         data = request.get_json()
-
+        
         if not data:
             return jsonify({
                 "error": "No hay datos"

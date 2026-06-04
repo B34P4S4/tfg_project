@@ -98,14 +98,15 @@ async function analizar() {
     const loading = document.getElementById("loading")
     const dashboard = document.getElementById("dashboard")
     const errorBox = document.getElementById("errorBox")
-
     errorBox.classList.add("hidden")
+
+    const analisisHistoricos = document.getElementById("analisisHistoricos")
+    analisisHistoricos.classList.add("hidden")
 
     if (!ruta) {
 
-        errorBox.innerText = "Error, falta ruta al proyecto"
+        errorBox.innerText = "Error, falta ruta al proyecto que se quiere analizar"
         errorBox.classList.remove("hidden")
-
         return
     }
 
@@ -140,6 +141,13 @@ async function analizar() {
             return
         }
 
+        mostrarInfoAnalisis({
+            id: data.id || "Nuevo",
+            fecha: formatearFecha(new Date()),
+            total_vulnerabilidades:data.vulnerabilidades?.length || 0,
+            total_ataques:normalizarAtaques(data.ataques).length || 0
+        })
+
         dashboard.classList.remove("hidden")
         renderVulnerabilidades(data.vulnerabilidades)
         renderAtaques(data.ataques)
@@ -154,7 +162,8 @@ async function analizar() {
         ultimoResultado = data
         await cargarHistoricoAnalisis()
         btnExportar.classList.remove("hidden")
-        btnExportar.disabled = false       
+        btnExportar.disabled = false  
+        analisisHistoricos.classList.remove("hidden")     
 
     }
 
@@ -164,6 +173,7 @@ async function analizar() {
         errorBox.innerText = e.message || "Error conectando con backend"
         errorBox.classList.remove("hidden")
         btnExportar.classList.add("hidden")
+        analisisHistoricos.classList.remove("hidden")  
     }
 
     finally {
@@ -747,58 +757,69 @@ async function cargarHistoricoAnalisis() {
     }
 }
 
+function formatearFecha(fechaISO) {
+
+    const fecha = new Date(fechaISO)
+
+    const dia =
+        String(fecha.getDate()).padStart(2, "0")
+
+    const mes =
+        String(fecha.getMonth() + 1).padStart(2, "0")
+
+    const anio =
+        String(fecha.getFullYear()).slice(-2)
+
+    const hora =
+        String(fecha.getHours()).padStart(2, "0")
+
+    const minutos =
+        String(fecha.getMinutes()).padStart(2, "0")
+
+    const segundos =
+        String(fecha.getSeconds()).padStart(2, "0")
+
+    return `${dia}/${mes}/${anio} - ${hora}:${minutos}:${segundos}`
+}
+
 // MOSTRAMOS LOS ULTIMOS ANALISIS
 function renderHistorico(lista) {
 
-    console.log("renderHistorico"+lista)
-
-    const div =
-        document.getElementById(
-            "listaAnalisis"
-        )
+    const div = document.getElementById("listaAnalisis")
 
     if (!lista || lista.length === 0) {
 
-        div.innerHTML =
-            "<p>No hay análisis previos</p>"
-
+        div.innerHTML = "<p>No hay análisis previos</p>"
         return
     }
 
     div.innerHTML = lista.map(a => `
 
-        <div
-            class="analysis-item"
-            onclick="cargarAnalisis(${a.id})"
-        >
-
-            <strong>
-                #${a.id}
-            </strong>
-
-            <br>
-
-            ${a.fecha}
-
-            <br>
-
-            Vulns:
-            ${a.total_vulnerabilidades}
-
-            |
-
-            Ataques:
-            ${a.total_ataques}
-
+        <div class="analysis-item" onclick="cerrarHistorico(); cargarAnalisis(${a.id},'${a.fecha}')">
+            <div class="analysis-id">
+                Análisis: #${a.id}
+            </div>
+            <div class="analysis-date">
+                ${formatearFecha(a.fecha)}
+            </div>
+            <div class="analysis-stats">
+                Total vulnerabilidades detectadas:
+                ${a.total_vulnerabilidades}
+                <br>
+                Total ataques correlacionados:
+                ${a.total_ataques}
+            </div>
         </div>
-
     `).join("")
 }
 
 //MOSTRAMOS ANALISIS SELECCIONADO
-async function cargarAnalisis(id) {
+async function cargarAnalisis(id,fecha) {
 
     console.log("Cargando ANALISIS..."+id)
+    const errorBox = document.getElementById("errorBox")
+    errorBox.classList.add("hidden")
+
     const dashboard = document.getElementById("dashboard")
 
     try {
@@ -809,11 +830,21 @@ async function cargarAnalisis(id) {
             )
 
         const data = await response.json()
-        console.log("DATA RECIBIDA:")
-        console.log(data)
 
-        dashboard.classList.remove("hidden")
+        mostrarInfoAnalisis({
+            id: id,
+            fecha: formatearFecha(fecha),
+            total_vulnerabilidades: data.vulnerabilidades.length,
+            total_ataques: data.ataques.total_ataques
+        })
 
+        console.log("DATA RECIBIDA:", data)
+        console.log("ID:", id)
+        console.log("FECHA:", data.fecha)
+        console.log("TOTAL_VULNERABILIDADES:", data.vulnerabilidades.length)
+        console.log("TOTAL_ATAQUES:", data.ataques.total_ataques)
+        
+        dashboard.classList.remove("hidden")  
         renderVulnerabilidades(data.vulnerabilidades)
 
         console.log("RAW HISTORICO ATAQUES:", data.ataques)
@@ -840,10 +871,55 @@ async function cargarAnalisis(id) {
     }
 }
 
+function cerrarHistorico() {
+
+    const historyHeader = document.getElementById("historyHeader")
+    const listaAnalisis = document.getElementById("listaAnalisis")
+
+    listaAnalisis.classList.add("hidden")
+    historyHeader.classList.remove("open")
+}
+
+// mostramos informacion del analisis que se muestra en cada momento
+function mostrarInfoAnalisis(info) {
+
+    const div = document.getElementById("analisisInfo")
+
+    div.innerHTML = `
+        <strong>Mostrando análisis:</strong> #${info.id ?? "Nuevo"}
+        &nbsp; | &nbsp;
+        <strong>Fecha:</strong> ${info.fecha}
+        &nbsp; | &nbsp;
+        <strong>Vulnerabilidades:</strong> ${info.total_vulnerabilidades}
+        &nbsp; | &nbsp;
+        <strong>Ataques correlacionados:</strong> ${info.total_ataques}
+    `
+
+    div.classList.remove("hidden")
+}
+
 // CARGA ULTIMOS ANALISIS AL CARGAR LA PAGINA
 window.addEventListener("load", () => {
 
     console.log("Cargando históricos...")
     cargarHistoricoAnalisis()
 
+    const historyHeader = document.getElementById("historyHeader")
+    const listaAnalisis = document.getElementById("listaAnalisis")
+
+    historyHeader.addEventListener("click", (e) => {
+        e.stopPropagation()
+        listaAnalisis.classList.toggle("hidden")
+        historyHeader.classList.toggle("open")
+    })
+
+    document.addEventListener("click", (e) => {
+
+        const panel = document.getElementById("analisisHistoricos")
+
+        if (!panel.contains(e.target)) {
+
+            cerrarHistorico()
+        }
+    })
 })

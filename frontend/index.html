@@ -22,7 +22,7 @@
 
 <div class="container">
     <p class="instructions">
-        Introduce la ruta del proyecto y ejecuta el análisis:
+        Introduce la ruta del proyecto y ejecuta un nuevo análisis:
     </p>
     <div class="search-box">
 
@@ -37,24 +37,33 @@
         </button>
 
     </div> 
-    
-    <div id="analisisHistoricos" class="history-panel">
-
-        <h4>Últimos análisis</h4>
-        <div id="listaAnalisis"></div>
-
-    </div>
 
     <div id="loading" class="loading hidden">
         Procesando análisis...
     </div>
 
     <div id="errorBox" class="error hidden"></div>
+    
+    <div id="analisisHistoricos" class="history-panel">
+
+        <p class="instructions">
+            Despliega para obtener análisis ya realizados:
+        </p>
+        
+        <div id="historyHeader" class="history-header">
+            <h4>Análisis anteriores</h4>
+            <span id="historyArrow">▼</span>
+        </div>
+
+        <div id="listaAnalisis" class="history-content hidden"></div>
+
+    </div>        
 
     <div id="dashboard" class="hidden">
 
         <div class="top-bar">
 
+            <div id="analisisInfo" class="analisis-info hidden"></div>
             <div class="tabs">
 
                 <button class="tab active" data-tab="vulnerabilidades">

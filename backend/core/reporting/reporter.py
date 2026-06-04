@@ -12,7 +12,7 @@ from pathlib import Path
 def generar_reporte_pdf(data):
 
     base_dir = Path(__file__).resolve().parent  
-    filename = f"vucan_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+    filename = f"VucanAI-ExportReport_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
     
     full_path = base_dir / filename
 
@@ -22,7 +22,6 @@ def generar_reporte_pdf(data):
     )
 
     styles = getSampleStyleSheet()
-
     elements = []
 
     # =====================================================
@@ -31,7 +30,7 @@ def generar_reporte_pdf(data):
 
     elements.append(
         Paragraph(
-            "Resultado del análisis de vulnerabilidades generado por VucanAI 2.0",
+            "Resultados del análisis de vulnerabilidades generado por VucanAI 2.0",
             styles["Title"]
         )
     )
@@ -72,7 +71,25 @@ def generar_reporte_pdf(data):
 
     for v in vulns:
 
+        # damos forma a los campos
         descripcion = escape(v.get("description","N/A"))
+        mitre = v.get("mitre", [])
+        if isinstance(mitre, list):
+            mitre_text = "<br/>".join(
+                escape(str(item))
+                for item in mitre
+            )
+        else:
+            mitre_text = escape(str(mitre))
+
+        mitigation = v.get("mitigation", [])
+        if isinstance(mitigation, list):
+            mitigation_text = "<br/>".join(
+                escape(str(item))
+                for item in mitigation
+            )
+        else:
+            mitigation_text = escape(str(mitigation))
 
         text = f"""
         <b>{v.get("vulnerability","N/A")}</b><br/><br/>
@@ -85,7 +102,11 @@ def generar_reporte_pdf(data):
         <b>OWASP:</b> A{str(v.get("owasp", "N/A")).zfill(2)}:2025<br/>
         <b>CAPEC:</b> {v.get("capec","N/A")}<br/>
         <b>Descripción:</b><br/>
-        {descripcion}
+        {descripcion}<br/>
+        <b>MITRE ATT&CK:</b> <br/>
+        {mitre_text}<br/>
+        <b>Medidas de mitigación:</b> <br/>
+        {mitigation_text}
         """
 
         elements.append(
