@@ -31,7 +31,7 @@ def guardar_analisis(path, vulnerabilidades, ataques):
                 len(ataques.get("ataques_detectados", []))
             )
         )
-        print("OK ANALYSIS STORED")
+        #print("OK ANALYSIS STORED")
 
         analisis_id = cursor.lastrowid
 
@@ -72,9 +72,9 @@ def guardar_analisis(path, vulnerabilidades, ataques):
                 mitigation
             )
 
-            print("TIPOS DE VULNERABILIDADES >>> ")
-            for i, v in enumerate(valores, start=1):
-                print(f"{i}: {type(v)} -> {repr(v)}")
+            #print("TIPOS DE VULNERABILIDADES >>> ")
+            #for i, v in enumerate(valores, start=1):
+                #print(f"{i}: {type(v)} -> {repr(v)}")
 
             cursor.execute(
                 """
@@ -113,7 +113,7 @@ def guardar_analisis(path, vulnerabilidades, ataques):
                     mitigation
                 )
             )
-            print("OK VULNS STORED")
+            #print("OK VULNS STORED")
 
             vuln_id = cursor.lastrowid
 
@@ -163,7 +163,7 @@ def guardar_analisis(path, vulnerabilidades, ataques):
                     ataque.get("accuracy_attack")
                 )
             )
-            print("OK ATAQUES STORED")
+            #print("OK ATAQUES STORED")
 
             ataque["_db_id"] = cursor.lastrowid
 
@@ -203,7 +203,7 @@ def guardar_analisis(path, vulnerabilidades, ataques):
                             vulnerabilidad_id
                         )
                     )
-                    print("OK CORRELACIONES STORED")
+                    #print("OK CORRELACIONES STORED")
 
         conn.commit()
         return analisis_id

@@ -15,6 +15,8 @@ def buscar_referencia(vuln):
 # CALCULAR SCORE DE EXACTITUD
 def calcular_score(vuln, referencia):
 
+    # VAMOS A CALCULAR LA VERACIDAD DE LA RESPUESTA DE LA IA COMPARANDOLA CON NUESTRA BASE DE CONOCIMIENTO CONTRASTADA
+    # EL NIVEL DE EXACTITUD ADECUADO DEBE SER >= 80%, SI ES MENOR SE CONSIDERA INEXACTO DEBIDO A ALUCINACIONES DE LA IA
     score = 0
 
     # CWE
@@ -39,9 +41,79 @@ def calcular_score(vuln, referencia):
 
     return score
 
+# AÑADIR ACCURACY_SCORE A CADA VULNERABILIDAD CON EL NIVEL DE EXACTITUD SEGUN SE PAREZCA MÁS AL RAG
+def calcular_accuracy(vulns):
 
-# DEDUPLICACIÓN + ELECCIÓN DEL MEJOR MODELO
+    resultado = []
+
+    for vuln in vulns:
+
+        referencia = buscar_referencia(vuln)
+
+        vuln_con_score = vuln.copy()
+
+        if referencia:
+
+            vuln_con_score["accuracy_score"] = calcular_score(
+                vuln,
+                referencia
+            )
+
+        else:
+
+            print(
+                f"[WARNING] No se encontró referencia CWE "
+                f"{vuln.get('cwe')}"
+            )
+
+            vuln_con_score["accuracy_score"] = 0
+
+        resultado.append(vuln_con_score)
+
+    return resultado
+
+# DEDUPLICACIÓN CON ELECCIÓN DEL MEJOR MODELO SEGUN ACCURACY_SCORE CALCULADO
 def deduplicar(vulns):
+
+    grupos = {}
+
+    for vuln in vulns:
+
+        key = (
+            vuln.get("file"),
+            vuln.get("chunk_id"),
+            vuln.get("cwe")
+        )
+
+        grupos.setdefault(key, []).append(vuln)
+
+    resultado_final = []
+
+    for key, grupo in grupos.items():
+
+        print("COMPARANDO VULNERABILIDADES")
+        print("====================================")
+
+        mejor_vuln = max(
+            grupo,
+            key=lambda v: v.get("accuracy_score", 0)
+        )
+
+        for vuln in grupo:
+
+            print(
+                f"Modelo: {vuln.get('modelo')} | "
+                f"Vuln: {vuln.get('vulnerability')} | "
+                f"CWE: {vuln.get('cwe')} | "
+                f"Score exactitud: {vuln.get('accuracy_score', 0)}"
+            )
+
+        resultado_final.append(mejor_vuln)
+
+    return resultado_final
+
+
+'''def deduplicar(vulns):
 
     grupos = {}
 
@@ -105,4 +177,4 @@ def deduplicar(vulns):
             mejor_vuln["accuracy_score"] = mejor_score
             resultado_final.append(mejor_vuln)
 
-    return resultado_final
+    return resultado_final'''

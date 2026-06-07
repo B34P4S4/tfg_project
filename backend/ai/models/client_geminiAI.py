@@ -17,7 +17,8 @@ def analizar_ia2(prompt):
         """
         response = model.generate_content(prompt)
         text = response.text.strip()
-        print("RAW:", text)
+        #print("RAW:", text)
+        print("Respuesta recibida de Gemini")
 
         # limpiamos para que tenga forma de JSON
         if text.startswith("```"):

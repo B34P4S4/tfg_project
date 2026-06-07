@@ -11,7 +11,7 @@ def construir_prompt(context, code, file_path=None, lenguaje=None):
         ]
     )
 
-    print("CONTEXTO DEL RAG:", context_text)
+    #print("CONTEXTO DEL RAG:", context_text)
 
     # montamos el prompt para las IA
     return f"""

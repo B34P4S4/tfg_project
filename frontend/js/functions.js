@@ -542,6 +542,18 @@ function renderGrafico(ataquesData) {
     console.log("NORMALIZADO:", ataques)
     const elements = []
 
+    console.log("renderGrafico "+ataques)
+    if (!ataques || ataques.length === 0) {
+
+        const div = document.getElementById("correlationGraph")
+        div.innerHTML = `
+            <div class="empty">
+                No se detectaron correlaciones de ataque
+            </div>
+        `
+        return
+    }
+
     ataques.forEach((ataque, attackIndex) => {
 
         const attackId = `attack_${attackIndex}`

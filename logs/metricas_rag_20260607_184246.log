@@ -1,0 +1,5 @@
+2026-06-07 18:42:46,035 - INFO - === MÉTRICAS RAG ===
+2026-06-07 18:42:46,035 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-07 18:42:46,035 - INFO - Ratio de aceptación de RAG (%): 100.0
+2026-06-07 18:42:46,037 - INFO - Confianza media de RAG: 95.91
+2026-06-07 18:42:46,037 - INFO - Ratio de dispersión en el RAG: 6.84
