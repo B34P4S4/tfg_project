@@ -1,0 +1,13 @@
+2026-06-12 13:07:14,474 - INFO - === MÉTRICAS DETECCION_VULNERABILIDADES ===
+2026-06-12 13:07:14,477 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-12 13:07:14,478 - INFO - Ratio de acuerdo entre modelos (%): 57.14
+2026-06-12 13:07:14,478 - INFO - Ratio de desacuerdo entre modelos (%): 42.86
+2026-06-12 13:07:14,478 - INFO - Cohen's Kappa: -0.2727
+2026-06-12 13:07:14,478 - INFO - Recall OpenAI (%): 76.92
+2026-06-12 13:07:14,478 - INFO - Recall Gemini (%): 84.62
+2026-06-12 13:07:14,478 - INFO - Recall Ensemble (%): 100.0
+2026-06-12 13:07:14,478 - INFO - Ensemble Gain (%): 18.18
+2026-06-12 13:07:14,478 - INFO - Critical Vulnerability Recall (%): 100.0
+2026-06-12 13:07:14,478 - INFO - Precisión (%): 92.86
+2026-06-12 13:07:14,478 - INFO - Falsos positivos (%): 7.14
+2026-06-12 13:07:14,478 - INFO - Falsos negativos (%): 0.0

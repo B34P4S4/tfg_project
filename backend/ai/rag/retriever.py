@@ -7,7 +7,7 @@ def recuperar_contexto(chunk, vector_store):
     query_vector = embeber_texto(chunk)    
     return vector_store.search(query_vector, k=2)
 
-# obtenemos el contexto manualmente
+# obtenemos el contexto manualmente como prueba
 '''def recuperar_contexto_manual(code):
     context = []
 

@@ -1,0 +1,9 @@
+2026-06-12 13:07:14,499 - INFO - === MÉTRICAS ATAQUES_CORRELACIONADOS ===
+2026-06-12 13:07:14,499 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-12 13:07:14,500 - INFO - Cobertura de ataque (%): 45.45
+2026-06-12 13:07:14,501 - INFO - Media de patrón de ataque completado (%): 66.7
+2026-06-12 13:07:14,501 - INFO - Máximo número de patrón de ataque completado (%): 66.7
+2026-06-12 13:07:14,501 - INFO - Fuerza de la correlación de ataques (%): 66.7
+2026-06-12 13:07:14,501 - INFO - Densidad en la correlación de ataques (%): 57.14
+2026-06-12 13:07:14,502 - INFO - Diversidad de ataques: 5
+2026-06-12 13:07:14,502 - INFO - Nivel de severidad de ataques: 8.42

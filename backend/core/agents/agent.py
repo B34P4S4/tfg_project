@@ -19,19 +19,30 @@ from backend.ai.models.client_geminiAI import analizar_ia2
 from backend.testing.metrics_testing.vul_detection_testing import get_metricas_deteccion_vulns
 from backend.testing.metrics_testing.rag_testing import get_metricas_rag
 from backend.testing.metrics_testing.attack_detection_testing import get_metricas_ataques
+from backend.testing.metrics_testing.comparision_testing import get_metricas_comparativa
+from backend.testing.performance_testing.comportamiento_testing import medir_tiempo_total,medir_consumo_memoria
 from backend.core.agents.logger import logging_metricas
 
+import time
+import os
+import psutil
 
 # inicializamos RAG 
 vector_store = init_vector_store()
-print("VECTOR STORE agent:", vector_store)
+# print("VECTOR STORE agent:", vector_store)
 
 # --------------------------------------------
 # PIPELINE PRINCIPAL
 # --------------------------------------------
 
 def analizar_proyecto(ruta):
-
+    # --------------------------------------------------
+    # ------------ PARA EL ANALISIS NO FUNCIONAL
+    # --------------------------------------------------
+    inicio_analisis = time.perf_counter()
+    proceso = psutil.Process(os.getpid())
+    memoria_inicio = proceso.memory_info().rss
+    
     proyecto = procesar_proyecto(ruta)
     vulnerabilidades = []
 
@@ -66,6 +77,7 @@ def analizar_proyecto(ruta):
                 vulnerabilidades.append(vuln_ia2)
 
     # -------------------------------------------------------------------
+    # ----------------- PARA PRUEBAS FUNCIONALES    ---------------------
     # --------------------- METRICAS VULNERABILIDADES Y RAG -------------
     # -------------------------------------------------------------------
 
@@ -73,7 +85,9 @@ def analizar_proyecto(ruta):
     #print(">>>>> VULNERABILIDADES:")
     #print(json.dumps(vulnerabilidades, indent=4, ensure_ascii=False))
 
+    # --------------------------------------------------
     # METRICAS DETECCIÓN VULNERABILIDADES
+    # --------------------------------------------------
     metricas_det_vulns = get_metricas_deteccion_vulns(vulnerabilidades)
     print(">>>>> METRICAS SOBRE VULNERABILIDADES DETECTADAS:", metricas_det_vulns)
 
@@ -93,8 +107,19 @@ def analizar_proyecto(ruta):
         metricas_rag
     )
 
-    # -------------------------------------------------------------------
-    
+    # --------------------------------------------------
+    # METRICAS COMPARACION 
+    # --------------------------------------------------
+    metricas_comparativa = get_metricas_comparativa(vulnerabilidades)
+    print(">>>>> METRICAS SOBRE RAG:", metricas_rag)
+
+    logging_metricas(
+        "comparativa",
+        ruta,
+        metricas_comparativa
+    )
+
+    # -------------------------------------------------------------------    
     # DEDUPLICACIÓN
     vulnerabilidades = deduplicar(vulnerabilidades)
 
@@ -105,6 +130,7 @@ def analizar_proyecto(ruta):
 
     # -------------------------------------------------------------------
     # METRICAS ATAQUES CORRELACIONADOS
+    # --------------------------------------------------
     ataques_detectados = ataques["ataques_detectados"]
     metricas_ataques = get_metricas_ataques(
         ataques_detectados,
@@ -119,13 +145,49 @@ def analizar_proyecto(ruta):
         metricas_ataques
     )
 
-    # -------------------------------------------------------------------
-    
+    # -------------------------------------------------------------------    
     # GUARDAMOS EN LA BASE DE DATOS
     guardar_analisis(ruta, vulnerabilidades, ataques)
     # COMPROBAMOS LO QUE SE HA GUARDADO EN LA BD
     #test_resultados_bd()
 
+    # --------------------------------------------------
+    # PARA PRUEBAS NO FUNCIONALES
+    # METRICAS NO FUNCIONALES
+    # --------------------------------------------------
+
+    tiempo_total = (time.perf_counter() - inicio_analisis)
+
+    memoria_fin = proceso.memory_info().rss
+
+    metricas_rendimiento = {
+        "tiempo_total_segundos": round(
+            tiempo_total,
+            4
+        ),
+        "memoria_consumida_mb": round(
+            (memoria_fin - memoria_inicio)
+            / (1024 * 1024),
+            2
+        ),
+        "num_archivos": len(proyecto),
+        "tiempo_medio_archivo": round(
+            tiempo_total / len(proyecto),
+            4
+        ) if proyecto else 0
+    }
+
+    print(">>>>> METRICAS RENDIMIENTO:",metricas_rendimiento)
+
+    logging_metricas(
+        "rendimiento",
+        ruta,
+        metricas_rendimiento
+    )
+
+    # --------------------------------------------------
+    # DEVOLVEMOS DATOS PARA EL FRONTEND
+    # --------------------------------------------------
     return {
     "total_vulnerabilidades": len(vulnerabilidades),
     "vulnerabilidades": vulnerabilidades,

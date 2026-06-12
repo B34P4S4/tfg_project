@@ -166,6 +166,58 @@ def get_all_findings(data):
     }
 
 # --------------------------------------------------------------------------------------
+# Obtenemos precision en la detección 
+def get_precision(
+    detected,
+    ground_truth
+):
+
+    if not detected:
+        return 0.0
+
+    tp = len(
+        detected & ground_truth
+    )
+
+    fp = len(
+        detected - ground_truth
+    )
+
+    return tp / (tp + fp)
+
+# --------------------------------------------------------------------------------------
+# Obtenemos ratio de falsos positivos
+def get_falsos_positivos(
+    detected,
+    ground_truth
+):
+
+    if not detected:
+        return 0.0
+
+    fp = len(
+        detected - ground_truth
+    )
+
+    return fp / len(detected)
+
+# --------------------------------------------------------------------------------------
+# Obtenemos ratio de falsos negativos
+def get_falsos_negativos(
+    detected,
+    ground_truth
+):
+
+    if not ground_truth:
+        return 0.0
+
+    fn = len(
+        ground_truth - detected
+    )
+
+    return fn / len(ground_truth)
+
+# --------------------------------------------------------------------------------------
 # FUNCION PARA LLAMAR A TODAS LAS DEMAS
 # Calcula todas las métricas de evaluación de detección de vulnerabilidades
 def get_metricas_deteccion_vulns(data):
@@ -245,6 +297,27 @@ def get_metricas_deteccion_vulns(data):
         )
     )
 
+    precision = (
+        get_precision(
+            detectadas_todas,
+            ground_truth
+        )
+    )
+
+    falsos_positivos = (
+        get_falsos_positivos(
+            detectadas_todas,
+            ground_truth
+        )
+    )
+
+    falsos_negativos = (
+        get_falsos_negativos(
+            detectadas_todas,
+            ground_truth
+        )
+    )
+
     return {
         "Ratio de acuerdo entre modelos (%)":
             round(acuerdo * 100, 2),
@@ -255,18 +328,27 @@ def get_metricas_deteccion_vulns(data):
         "Cohen's Kappa":
             round(kappa, 4),
 
-        "Recall OpenAI (%)":
+        "Recall OpenAI (%)": 
             round(recall_openai * 100, 2),
 
         "Recall Gemini (%)":
             round(recall_gemini * 100, 2),
 
-        "Recall Ensemble (%)":
+        "Recall Ensemble (%)": #De todas las vulnerabilidades reales, ¿cuántas detectó el sistema?
             round(recall_ensemble * 100, 2),
 
         "Ensemble Gain (%)":
             round(gain, 2),
 
         "Critical Vulnerability Recall (%)":
-            round(critical_recall * 100, 2)
+            round(critical_recall * 100, 2),
+
+        "Precisión (%)":
+            round(precision * 100, 2),
+
+        "Falsos positivos (%)":
+            round(falsos_positivos * 100, 2),
+
+        "Falsos negativos (%)":
+            round(falsos_negativos * 100, 2)
     }
