@@ -1,0 +1,10 @@
+2026-06-14 20:18:30,243 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-14 20:18:30,243 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\typescript 
+2026-06-14 20:18:30,245 - INFO - Por lenguaje: {'typescript': {'Precision (%)': 84.85, 'Recall (%)': 100.0}}
+2026-06-14 20:18:30,245 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 88.89, 'Recall (%)': 85.71, 'Falsos Positivos (%)': 11.11, 'Falsos Negativos (%)': 14.29}, 'Gemini': {'Precision (%)': 89.29, 'Recall (%)': 89.29, 'Falsos Positivos (%)': 10.71, 'Falsos Negativos (%)': 10.71}}
+2026-06-14 20:18:30,246 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 88.89, 'Recall (%)': 85.71, 'Falsos Positivos (%)': 11.11, 'Falsos Negativos (%)': 14.29}, 'Gemini': {'Precision (%)': 89.29, 'Recall (%)': 89.29, 'Falsos Positivos (%)': 10.71, 'Falsos Negativos (%)': 10.71}, 'Union de modelos': {'Precision (%)': 84.85, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 15.15, 'Falsos Negativos (%)': 0.0}}
+2026-06-14 20:53:46,822 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-14 20:53:46,831 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\javascript 
+2026-06-14 20:53:46,831 - INFO - Por lenguaje: {'javascript': {'Precision (%)': 93.75, 'Recall (%)': 100.0}}
+2026-06-14 20:53:46,833 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 93.33, 'Recall (%)': 93.33, 'Falsos Positivos (%)': 6.67, 'Falsos Negativos (%)': 6.67}, 'Gemini': {'Precision (%)': 100.0, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 0.0, 'Falsos Negativos (%)': 0.0}}
+2026-06-14 20:53:46,833 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 93.33, 'Recall (%)': 93.33, 'Falsos Positivos (%)': 6.67, 'Falsos Negativos (%)': 6.67}, 'Gemini': {'Precision (%)': 100.0, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 0.0, 'Falsos Negativos (%)': 0.0}, 'Union de modelos': {'Precision (%)': 93.75, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 6.25, 'Falsos Negativos (%)': 0.0}}

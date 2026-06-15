@@ -7,6 +7,7 @@ from flask_cors import CORS
 from backend.core.agents.agent import analizar_proyecto
 from backend.core.reporting.reporter import generar_reporte_pdf
 from backend.storage.repository import obtener_ultimos_analisis, obtener_analisis, obtener_ataques, obtener_vulnerabilidades
+from backend.storage.statistics_db import get_estadisticas_globales
 
 
 app = Flask(__name__)
@@ -90,13 +91,15 @@ def cargar_analisis(analisis_id):
 
         vulnerabilidades = obtener_vulnerabilidades(analisis_id)
         ataques = obtener_ataques(analisis_id)
+        estadisticas = get_estadisticas_globales()
 
         return jsonify({
             "vulnerabilidades": vulnerabilidades,
             "ataques": {
                 "ataques_detectados": ataques,
                 "total_ataques": len(ataques)
-            }
+            },
+            "estadisticas": estadisticas
         })
 
     except Exception as e:

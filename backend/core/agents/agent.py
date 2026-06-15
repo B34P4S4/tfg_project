@@ -9,6 +9,7 @@ from backend.core.agents.prompt_builder import construir_prompt
 from backend.core.parsing.parser import parsear_salida_IA
 from backend.core.parsing.deduplicator import deduplicar, calcular_accuracy
 from backend.storage.repository import guardar_analisis
+from backend.storage.statistics_db import get_estadisticas_globales
 from backend.testing.db_testing.test_db import test_resultados_bd
 
 from backend.ai.rag.retriever import recuperar_contexto
@@ -185,11 +186,14 @@ def analizar_proyecto(ruta):
         metricas_rendimiento
     )
 
+    estadisticas = get_estadisticas_globales()
+
     # --------------------------------------------------
     # DEVOLVEMOS DATOS PARA EL FRONTEND
     # --------------------------------------------------
     return {
     "total_vulnerabilidades": len(vulnerabilidades),
     "vulnerabilidades": vulnerabilidades,
-    "ataques": ataques
+    "ataques": ataques,
+    "estadisticas": estadisticas
 }

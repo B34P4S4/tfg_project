@@ -156,6 +156,8 @@ async function analizar() {
             renderGrafico(data.ataques)
         }, 50)
 
+        renderEstadisticas(data.estadisticas)
+
         loading.classList.add("hidden")
 
         // BOTON EXPORTAR
@@ -762,6 +764,8 @@ async function cargarHistoricoAnalisis() {
         const data = await response.json()
         console.log("DATOS HISTORICO RECUPERADOS: "+data)
         renderHistorico(data)
+        console.log("DATA COMPLETA:", data);
+        console.log("ESTADISTICAS:", data.estadisticas);
     }
     catch(e) {
 
@@ -870,6 +874,8 @@ async function cargarAnalisis(id,fecha) {
             renderGrafico(data.ataques)
         }, 50)
 
+        renderEstadisticas(data.estadisticas)
+
         ultimoResultado = data
         await cargarHistoricoAnalisis()
 
@@ -908,6 +914,190 @@ function mostrarInfoAnalisis(info) {
     `
 
     div.classList.remove("hidden")
+}
+
+// MOSTRAR ESTADISTICAS GLOBALES DE TODOS LOS ANALISIS GRAFICAMENTE
+function renderEstadisticas(stats){
+    console.log("ESTADISTICAS RECIBIDAS:", stats);
+    if(!stats) return
+
+    renderResumenStats(stats)
+    renderSeveridad(stats)
+    renderLenguajes(stats)
+    renderCWE(stats)
+    renderCAPEC(stats)
+    //renderHistoricoStats(stats)
+}
+
+function renderResumenStats(stats){
+
+    document.getElementById(
+        "statsSummary"
+    ).innerHTML = `
+
+        <div class="stats-kpis">
+
+            <div class="kpi">
+                <h3>${stats.total_analisis}</h3>
+                <span>Análisis</span>
+            </div>
+
+            <div class="kpi">
+                <h3>${stats.total_vulnerabilidades}</h3>
+                <span>Vulnerabilidades</span>
+            </div>
+
+            <div class="kpi">
+                <h3>${stats.total_ataques}</h3>
+                <span>Ataques</span>
+            </div>
+
+            <div class="kpi">
+                <h3>${stats.total_correlaciones}</h3>
+                <span>Correlaciones</span>
+            </div>
+
+        </div>
+    `
+}
+
+function renderSeveridad(stats){
+
+    const s = stats.severidad
+
+    new Chart(
+        document.getElementById("chartSeveridad"),
+        {
+            type:"pie",
+
+            data:{
+                labels:[
+                    "Nº de vulnerabilidades Críticas",
+                    "Nº de vulnerabilidades Altas",
+                    "Nº de vulnerabilidades Medias",
+                    "Nº de vulnerabilidades Bajas"
+                ],
+
+                datasets:[{
+                    data:[
+                        s.criticas,
+                        s.altas,
+                        s.medias,
+                        s.bajas
+                    ],
+                    backgroundColor: [
+                        "#e74c3c",
+                        "#f39c12",
+                        "#2ecc71",
+                        "#3498db"
+                    ]
+                }]
+            }
+        }
+    )
+}
+
+function renderLenguajes(stats){
+
+    const datos =
+        stats.vulnerabilidades_por_lenguaje
+
+    new Chart(
+        document.getElementById("chartLenguajes"),
+        {
+            type:"bar",
+
+            data:{
+                labels:Object.keys(datos),
+
+                datasets:[{
+                    label:"Nº de vulnerabilidades por lenguaje",
+                    data:Object.values(datos),
+                    backgroundColor: [
+                        "#5e27f5",
+                        "#f39c12",
+                        "#1be4c2",
+                        "#116835",
+                        "#cc2ebf"
+                    ]
+                }]
+            }
+        }
+    )
+}
+
+function renderCWE(stats){
+
+    const top =
+        stats.cwe_mas_frecuentes.slice(0,10)
+
+    new Chart(
+        document.getElementById("chartCWE"),
+        {
+            type:"bar",
+
+            data:{
+                labels:top.map(x => x.cwe),
+
+                datasets:[{
+                    label:"CWEs más frecuentes",
+                    data:top.map(x => x.total),
+                    backgroundColor: "#105cad"
+                }]
+            }
+        }
+    )
+}
+
+function renderCAPEC(stats){
+
+    console.log("CAPECS:", stats.capec_mas_frecuentes);
+    const top = stats.capec_mas_frecuentes.slice(0,10)
+
+    console.log("TOP:", top);
+    new Chart(
+        document.getElementById("chartCAPEC"),
+        {
+            type:"bar",
+
+            data:{
+                labels:top.map(x => x.capec),
+
+                datasets:[{
+                    label:"CAPECs más frecuentes",
+                    data:top.map(x => x.total),
+                    backgroundColor: "#c95b11"
+                }]
+            }
+        }
+    )
+}
+
+function renderHistoricoStats(stats){
+
+    const datos = stats.historico
+
+    new Chart(
+        document.getElementById("chartHistorico"),
+        {
+            type:"line",
+
+            data:{
+
+                labels:
+                    datos.map(x => x.fecha),
+
+                datasets:[{
+                    label:"Evolución en el análisis de vulnerabilidades",
+
+                    data:
+                        datos.map(
+                            x => x.vulnerabilidades
+                        )
+                }]
+            }
+        }
+    )
 }
 
 // CARGA ULTIMOS ANALISIS AL CARGAR LA PAGINA

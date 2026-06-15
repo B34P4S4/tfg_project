@@ -1,0 +1,12 @@
+2026-06-14 19:09:22,501 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 19:09:22,503 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-14 19:09:22,503 - INFO - tiempo_total_segundos: 380.9945
+2026-06-14 19:09:22,503 - INFO - memoria_consumida_mb: 18.45
+2026-06-14 19:09:22,503 - INFO - num_archivos: 20
+2026-06-14 19:09:22,503 - INFO - tiempo_medio_archivo: 19.0497
+2026-06-14 19:32:42,335 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 19:32:42,336 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-14 19:32:42,336 - INFO - tiempo_total_segundos: 377.392
+2026-06-14 19:32:42,336 - INFO - memoria_consumida_mb: 7.87
+2026-06-14 19:32:42,336 - INFO - num_archivos: 20
+2026-06-14 19:32:42,336 - INFO - tiempo_medio_archivo: 18.8696

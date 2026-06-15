@@ -1,0 +1,6 @@
+2026-06-14 20:04:41,389 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 20:04:41,389 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\sql 
+2026-06-14 20:04:41,389 - INFO - tiempo_total_segundos: 901.2782
+2026-06-14 20:04:41,389 - INFO - memoria_consumida_mb: 8.94
+2026-06-14 20:04:41,389 - INFO - num_archivos: 41
+2026-06-14 20:04:41,389 - INFO - tiempo_medio_archivo: 21.9824

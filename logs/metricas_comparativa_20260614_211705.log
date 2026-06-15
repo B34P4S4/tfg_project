@@ -1,0 +1,5 @@
+2026-06-14 21:17:05,153 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-14 21:17:05,155 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\php 
+2026-06-14 21:17:05,155 - INFO - Por lenguaje: {'PHP': {'Precision (%)': 78.95, 'Recall (%)': 100.0}}
+2026-06-14 21:17:05,156 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 79.31, 'Recall (%)': 76.67, 'Falsos Positivos (%)': 20.69, 'Falsos Negativos (%)': 23.33}, 'Gemini': {'Precision (%)': 93.33, 'Recall (%)': 93.33, 'Falsos Positivos (%)': 6.67, 'Falsos Negativos (%)': 6.67}}
+2026-06-14 21:17:05,157 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 79.31, 'Recall (%)': 76.67, 'Falsos Positivos (%)': 20.69, 'Falsos Negativos (%)': 23.33}, 'Gemini': {'Precision (%)': 93.33, 'Recall (%)': 93.33, 'Falsos Positivos (%)': 6.67, 'Falsos Negativos (%)': 6.67}, 'Union de modelos': {'Precision (%)': 78.95, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 21.05, 'Falsos Negativos (%)': 0.0}}

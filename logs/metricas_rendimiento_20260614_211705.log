@@ -1,0 +1,6 @@
+2026-06-14 21:17:05,195 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 21:17:05,195 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\php 
+2026-06-14 21:17:05,195 - INFO - tiempo_total_segundos: 531.9753
+2026-06-14 21:17:05,195 - INFO - memoria_consumida_mb: 17.45
+2026-06-14 21:17:05,195 - INFO - num_archivos: 31
+2026-06-14 21:17:05,195 - INFO - tiempo_medio_archivo: 17.1605

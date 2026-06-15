@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <!-- Cytoscape -->
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -78,6 +78,10 @@
                     Correlaciones
                 </button>
 
+                <button class="tab" data-tab="estadisticas">
+                    Estadísticas globales
+                </button>
+
             </div>
 
             <button id="btnExportar" class="export-btn hidden">
@@ -121,9 +125,35 @@
 
             </div>            
 
-        </div>        
+        </div>  
+        
+        <div id="estadisticas" class="tab-content">
 
-    </div>
+            <div id="statsSummary"></div>
+
+                <div class="charts-grid">
+
+                    <div class="chart-card">
+                        <canvas id="chartSeveridad"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <canvas id="chartLenguajes"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <canvas id="chartCWE"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <canvas id="chartCAPEC"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
 </div>
 

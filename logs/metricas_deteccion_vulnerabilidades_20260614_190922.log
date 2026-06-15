@@ -1,0 +1,26 @@
+2026-06-14 19:09:22,439 - INFO - === MÉTRICAS DETECCION_VULNERABILIDADES ===
+2026-06-14 19:09:22,442 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-14 19:09:22,442 - INFO - Ratio de acuerdo entre modelos (%): 81.82
+2026-06-14 19:09:22,444 - INFO - Ratio de desacuerdo entre modelos (%): 18.18
+2026-06-14 19:09:22,444 - INFO - Cohen's Kappa: -0.1
+2026-06-14 19:09:22,446 - INFO - Recall OpenAI (%): 90.0
+2026-06-14 19:09:22,446 - INFO - Recall Gemini (%): 100.0
+2026-06-14 19:09:22,448 - INFO - Recall Ensemble (%): 100.0
+2026-06-14 19:09:22,448 - INFO - Ensemble Gain (%): 0.0
+2026-06-14 19:09:22,448 - INFO - Critical Vulnerability Recall (%): 100.0
+2026-06-14 19:09:22,448 - INFO - Precisión (%): 90.91
+2026-06-14 19:09:22,451 - INFO - Falsos positivos (%): 9.09
+2026-06-14 19:09:22,451 - INFO - Falsos negativos (%): 0.0
+2026-06-14 19:32:42,284 - INFO - === MÉTRICAS DETECCION_VULNERABILIDADES ===
+2026-06-14 19:32:42,285 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-14 19:32:42,286 - INFO - Ratio de acuerdo entre modelos (%): 73.91
+2026-06-14 19:32:42,286 - INFO - Ratio de desacuerdo entre modelos (%): 26.09
+2026-06-14 19:32:42,286 - INFO - Cohen's Kappa: -0.15
+2026-06-14 19:32:42,286 - INFO - Recall OpenAI (%): 85.0
+2026-06-14 19:32:42,287 - INFO - Recall Gemini (%): 100.0
+2026-06-14 19:32:42,287 - INFO - Recall Ensemble (%): 100.0
+2026-06-14 19:32:42,287 - INFO - Ensemble Gain (%): 0.0
+2026-06-14 19:32:42,287 - INFO - Critical Vulnerability Recall (%): 100.0
+2026-06-14 19:32:42,288 - INFO - Precisión (%): 86.96
+2026-06-14 19:32:42,288 - INFO - Falsos positivos (%): 13.04
+2026-06-14 19:32:42,288 - INFO - Falsos negativos (%): 0.0

@@ -1,0 +1,12 @@
+2026-06-14 20:18:30,301 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 20:18:30,303 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\typescript 
+2026-06-14 20:18:30,303 - INFO - tiempo_total_segundos: 580.6333
+2026-06-14 20:18:30,303 - INFO - memoria_consumida_mb: 20.89
+2026-06-14 20:18:30,303 - INFO - num_archivos: 28
+2026-06-14 20:18:30,305 - INFO - tiempo_medio_archivo: 20.7369
+2026-06-14 20:53:46,874 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 20:53:46,875 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\javascript 
+2026-06-14 20:53:46,875 - INFO - tiempo_total_segundos: 565.979
+2026-06-14 20:53:46,876 - INFO - memoria_consumida_mb: -63.61
+2026-06-14 20:53:46,876 - INFO - num_archivos: 30
+2026-06-14 20:53:46,876 - INFO - tiempo_medio_archivo: 18.866

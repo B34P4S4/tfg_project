@@ -57,7 +57,7 @@ def crear_bd():
         nombre TEXT,
         ataque_resultante TEXT,
         descripcion TEXT,
-        capec_id INTEGER,
+        capec INTEGER,
         precision REAL,                         
         FOREIGN KEY (analisis_id)
             REFERENCES analisis(id)

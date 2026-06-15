@@ -1,0 +1,6 @@
+2026-06-14 21:38:52,016 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-14 21:38:52,017 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\proyectos_codigo\testing\python 
+2026-06-14 21:38:52,017 - INFO - tiempo_total_segundos: 385.9828
+2026-06-14 21:38:52,017 - INFO - memoria_consumida_mb: 15.54
+2026-06-14 21:38:52,018 - INFO - num_archivos: 20
+2026-06-14 21:38:52,018 - INFO - tiempo_medio_archivo: 19.2991
