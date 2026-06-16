@@ -1,0 +1,1 @@
+INSERT INTO inputs (data) VALUES (REPEAT('A', 1000000));

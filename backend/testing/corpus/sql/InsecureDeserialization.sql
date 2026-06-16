@@ -1,0 +1,1 @@
+INSERT INTO payloads (data) VALUES ('O:8:"stdClass":1:{s:4:"data";s:4:"test";}');

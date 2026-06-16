@@ -1,0 +1,57 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.20, pytest-9.1.0, pluggy-1.6.0 -- C:\Users\bbps14\AppData\Local\anaconda3\envs\TFG\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.10.20', 'Platform': 'Windows-10-10.0.26100-SP0', 'Packages': {'pytest': '9.1.0', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.12.1', 'html': '4.2.0', 'metadata': '3.1.1'}}
+rootdir: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\tfg_project
+configfile: pytest.ini
+plugins: anyio-4.12.1, html-4.2.0, metadata-3.1.1
+collecting ... collected 10 items
+
+backend/testing/pytest/test_funcionales.py::test_recall_ensemble PASSED  [ 10%]
+backend/testing/pytest/test_funcionales.py::test_critical_recall PASSED  [ 20%]
+backend/testing/pytest/test_funcionales.py::test_rag PASSED              [ 30%]
+backend/testing/pytest/test_funcionales.py::test_cobertura_ataques PASSED [ 40%]
+backend/testing/pytest/test_funcionales.py::test_precision PASSED        [ 50%]
+backend/testing/pytest/test_funcionales.py::test_falsos_positivos PASSED [ 60%]
+backend/testing/pytest/test_funcionales.py::test_falsos_negativos PASSED [ 70%]
+backend/testing/pytest/test_no_funcionales.py::test_tiempo FAILED        [ 80%]
+backend/testing/pytest/test_no_funcionales.py::test_memoria PASSED       [ 90%]
+backend/testing/pytest/test_no_funcionales.py::test_tiempo_por_archivo PASSED [100%]
+
+================================== FAILURES ===================================
+_________________________________ test_tiempo _________________________________
+
+resultado_analisis = {'total_vulnerabilidades': 37, 'vulnerabilidades': [{'modelo': 'Gemini', 'file': 'backend/testing/corpus/python\\Broke...cwe': 78, 'total': 46}, {'cwe': 918, 'total': 40}, {'cwe': 79, 'total': 39}, {'cwe': 16, 'total': 37}, ...], ...}, ...}
+
+    def test_tiempo(resultado_analisis):
+    
+        tiempo = resultado_analisis[
+            "metricas_rendimiento"
+        ]["tiempo_total_segundos"]
+    
+>       assert tiempo < 600
+E       assert 651.565 < 600
+
+backend\testing\pytest\test_no_funcionales.py:9: AssertionError
+============================== warnings summary ===============================
+..\..\..\..\..\..\AppData\Local\anaconda3\envs\TFG\lib\site-packages\google\api_core\_python_version_support.py:273
+  C:\Users\bbps14\AppData\Local\anaconda3\envs\TFG\lib\site-packages\google\api_core\_python_version_support.py:273: FutureWarning: You are using a Python version (3.10.20) which Google will stop supporting in new releases of google.api_core once it reaches its end of life (2026-10-04). Please upgrade to the latest Python version, or at least Python 3.11, to continue receiving updates for google.api_core past that date.
+    warnings.warn(message, FutureWarning)
+
+backend\ai\models\client_geminiAI.py:4
+  C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\tfg_project\backend\ai\models\client_geminiAI.py:4: FutureWarning: 
+  
+  All support for the `google.generativeai` package has ended. It will no longer be receiving 
+  updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+  See README for more details:
+  
+  https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+  
+    import google.generativeai as genai
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\tfg_project\report_pytest.xml -
+- Generated html report: file:///C:/Users/bbps14/Documents/bps/PERSONAL/UNIR/TFG/tfg_project/report_pytest.html -
+=========================== short test summary info ===========================
+FAILED backend/testing/pytest/test_no_funcionales.py::test_tiempo - assert 65...
+============= 1 failed, 9 passed, 2 warnings in 652.39s (0:10:52) =============

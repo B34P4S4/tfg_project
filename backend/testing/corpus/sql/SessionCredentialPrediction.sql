@@ -1,0 +1,1 @@
+INSERT INTO sessions (session_id) VALUES ('session_00000001');

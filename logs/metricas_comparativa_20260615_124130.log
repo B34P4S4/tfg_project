@@ -1,0 +1,10 @@
+2026-06-15 12:41:30,390 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-15 12:41:30,390 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/python 
+2026-06-15 12:41:30,390 - INFO - Por lenguaje: {'python': {'Precision (%)': 97.14, 'Recall (%)': 100.0}}
+2026-06-15 12:41:30,390 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 96.97, 'Recall (%)': 94.12, 'Falsos Positivos (%)': 3.03, 'Falsos Negativos (%)': 5.88}, 'Gemini': {'Precision (%)': 100.0, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 0.0, 'Falsos Negativos (%)': 0.0}}
+2026-06-15 12:41:30,390 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 96.97, 'Recall (%)': 94.12, 'Falsos Positivos (%)': 3.03, 'Falsos Negativos (%)': 5.88}, 'Gemini': {'Precision (%)': 100.0, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 0.0, 'Falsos Negativos (%)': 0.0}, 'Union de modelos': {'Precision (%)': 97.14, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 2.86, 'Falsos Negativos (%)': 0.0}}
+2026-06-15 12:52:11,704 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-15 12:52:11,704 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/python 
+2026-06-15 12:52:11,704 - INFO - Por lenguaje: {'python': {'Precision (%)': 91.89, 'Recall (%)': 100.0}}
+2026-06-15 12:52:11,704 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 94.12, 'Recall (%)': 94.12, 'Falsos Positivos (%)': 5.88, 'Falsos Negativos (%)': 5.88}, 'Gemini': {'Precision (%)': 97.06, 'Recall (%)': 97.06, 'Falsos Positivos (%)': 2.94, 'Falsos Negativos (%)': 2.94}}
+2026-06-15 12:52:11,704 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 94.12, 'Recall (%)': 94.12, 'Falsos Positivos (%)': 5.88, 'Falsos Negativos (%)': 5.88}, 'Gemini': {'Precision (%)': 97.06, 'Recall (%)': 97.06, 'Falsos Positivos (%)': 2.94, 'Falsos Negativos (%)': 2.94}, 'Union de modelos': {'Precision (%)': 91.89, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 8.11, 'Falsos Negativos (%)': 0.0}}

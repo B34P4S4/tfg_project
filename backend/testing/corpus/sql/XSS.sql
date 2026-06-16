@@ -1,0 +1,1 @@
+INSERT INTO comments (text) VALUES ('<script>alert(1)</script>');

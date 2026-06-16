@@ -1,0 +1,1 @@
+UPDATE logging SET enabled = false WHERE service = 'auth';

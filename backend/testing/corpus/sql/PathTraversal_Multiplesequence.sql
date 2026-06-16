@@ -1,0 +1,1 @@
+INSERT INTO uploads (filename) VALUES ('....//....//etc/passwd');

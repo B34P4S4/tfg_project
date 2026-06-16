@@ -1,0 +1,1 @@
+INSERT INTO cookies (name, http_only) VALUES ('sessionid', false);

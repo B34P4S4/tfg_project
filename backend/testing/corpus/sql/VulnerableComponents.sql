@@ -1,0 +1,1 @@
+INSERT INTO dependencies (name, version) VALUES ('openssl', '1.0.1'); -- obsoleta

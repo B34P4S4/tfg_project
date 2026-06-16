@@ -1,0 +1,6 @@
+2026-06-15 17:51:44,435 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-15 17:51:44,438 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/python 
+2026-06-15 17:51:44,438 - INFO - tiempo_total_segundos: 547.9458
+2026-06-15 17:51:44,438 - INFO - memoria_consumida_mb: 12.66
+2026-06-15 17:51:44,438 - INFO - num_archivos: 34
+2026-06-15 17:51:44,438 - INFO - tiempo_medio_archivo: 16.1161

@@ -1,0 +1,1 @@
+INSERT INTO sessions (user_id, session_id) VALUES (1, 'fixed-session-id');

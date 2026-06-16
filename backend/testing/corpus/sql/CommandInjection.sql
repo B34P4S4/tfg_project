@@ -1,0 +1,1 @@
+INSERT INTO jobs (command) VALUES ('ls -la; rm -rf /tmp/*');

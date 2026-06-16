@@ -195,5 +195,12 @@ def analizar_proyecto(ruta):
     "total_vulnerabilidades": len(vulnerabilidades),
     "vulnerabilidades": vulnerabilidades,
     "ataques": ataques,
-    "estadisticas": estadisticas
+    "estadisticas": estadisticas,
+    # --------------------------------------------------
+    # PARA PRUEBAS CON PYTEST
+    "metricas_vulnerabilidades": metricas_det_vulns,
+    "metricas_rag": metricas_rag,
+    "metricas_comparativa": metricas_comparativa,
+    "metricas_ataques": metricas_ataques,
+    "metricas_rendimiento": metricas_rendimiento
 }

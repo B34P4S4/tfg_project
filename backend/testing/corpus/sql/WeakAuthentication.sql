@@ -1,0 +1,1 @@
+INSERT INTO auth_config (max_attempts) VALUES (0);

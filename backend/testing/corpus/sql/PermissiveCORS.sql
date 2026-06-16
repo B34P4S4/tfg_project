@@ -1,0 +1,1 @@
+INSERT INTO cors_config (origin) VALUES ('*');

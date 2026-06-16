@@ -1,0 +1,1 @@
+INSERT INTO templates (content) VALUES ('{{7*7}}');

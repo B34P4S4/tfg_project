@@ -1,0 +1,1 @@
+INSERT INTO transactions (user_id, amount) VALUES (1, -1000);

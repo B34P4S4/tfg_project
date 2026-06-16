@@ -1,0 +1,1 @@
+INSERT INTO logs (message) VALUES ('ERROR\n[ADMIN] bypass=true');

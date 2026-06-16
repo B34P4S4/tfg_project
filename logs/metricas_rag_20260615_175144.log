@@ -1,0 +1,5 @@
+2026-06-15 17:51:44,363 - INFO - === MÉTRICAS RAG ===
+2026-06-15 17:51:44,363 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/python 
+2026-06-15 17:51:44,363 - INFO - Ratio de aceptación de RAG (%): 92.65
+2026-06-15 17:51:44,363 - INFO - Confianza media de RAG: 93.75
+2026-06-15 17:51:44,363 - INFO - Ratio de dispersión en el RAG: 12.73

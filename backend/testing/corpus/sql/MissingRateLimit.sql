@@ -1,0 +1,1 @@
+INSERT INTO login_attempts (user_id, attempts) VALUES (1, 999999);

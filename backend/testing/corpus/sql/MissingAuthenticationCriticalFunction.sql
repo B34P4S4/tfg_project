@@ -1,0 +1,1 @@
+INSERT INTO admin_actions (action) VALUES ('DELETE_ALL_USERS');

@@ -1,0 +1,1 @@
+INSERT INTO auth_logs (status, message) VALUES ('fail', 'user exists but password wrong');

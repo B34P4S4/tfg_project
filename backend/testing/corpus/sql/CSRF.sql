@@ -1,0 +1,1 @@
+INSERT INTO csrf_tokens (user_id, token) VALUES (1, '12345');
