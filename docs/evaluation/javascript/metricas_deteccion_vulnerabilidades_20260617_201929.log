@@ -1,0 +1,13 @@
+2026-06-17 20:19:29,644 - INFO - === MÉTRICAS DETECCION_VULNERABILIDADES ===
+2026-06-17 20:19:29,644 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/javascript 
+2026-06-17 20:19:29,644 - INFO - Ratio de acuerdo entre modelos (%): 84.85
+2026-06-17 20:19:29,644 - INFO - Ratio de desacuerdo entre modelos (%): 15.15
+2026-06-17 20:19:29,645 - INFO - Cohen's Kappa: -0.0784
+2026-06-17 20:19:29,645 - INFO - Recall OpenAI (%): 90.62
+2026-06-17 20:19:29,645 - INFO - Recall Gemini (%): 96.88
+2026-06-17 20:19:29,645 - INFO - Recall Ensemble (%): 100.0
+2026-06-17 20:19:29,646 - INFO - Ensemble Gain (%): 3.23
+2026-06-17 20:19:29,648 - INFO - Critical Vulnerability Recall (%): 100.0
+2026-06-17 20:19:29,648 - INFO - Precisión (%): 96.97
+2026-06-17 20:19:29,648 - INFO - Falsos positivos (%): 3.03
+2026-06-17 20:19:29,648 - INFO - Falsos negativos (%): 0.0

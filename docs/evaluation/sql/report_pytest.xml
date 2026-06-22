@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="10" time="891.537" timestamp="2026-06-17T20:40:12.549509+02:00" hostname="PJ4516869153260"><testcase classname="backend.testing.pytest.test_funcionales" name="test_recall_ensemble" time="890.246" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_critical_recall" time="0.002" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_rag" time="0.004" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_cobertura_ataques" time="0.004" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_precision" time="0.004" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_falsos_positivos" time="0.004" /><testcase classname="backend.testing.pytest.test_funcionales" name="test_falsos_negativos" time="0.003" /><testcase classname="backend.testing.pytest.test_no_funcionales" name="test_tiempo" time="0.003"><failure message="assert 890.2121 &lt; 600">resultado_analisis = {'total_vulnerabilidades': 47, 'vulnerabilidades': [{'modelo': 'Gemini', 'file': 'backend/testing/corpus/sql\\BrokenAc...cwe': 78, 'total': 50}, {'cwe': 918, 'total': 44}, {'cwe': 79, 'total': 44}, {'cwe': 16, 'total': 40}, ...], ...}, ...}
+
+    def test_tiempo(resultado_analisis):
+    
+        tiempo = resultado_analisis[
+            "metricas_rendimiento"
+        ]["tiempo_total_segundos"]
+    
+&gt;       assert tiempo &lt; 600
+E       assert 890.2121 &lt; 600
+
+backend\testing\pytest\test_no_funcionales.py:9: AssertionError</failure></testcase><testcase classname="backend.testing.pytest.test_no_funcionales" name="test_memoria" time="0.006" /><testcase classname="backend.testing.pytest.test_no_funcionales" name="test_tiempo_por_archivo" time="0.004" /></testsuite></testsuites>

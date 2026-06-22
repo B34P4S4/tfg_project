@@ -1,0 +1,5 @@
+2026-06-17 21:08:42,259 - INFO - === MÉTRICAS RAG ===
+2026-06-17 21:08:42,259 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/php 
+2026-06-17 21:08:42,259 - INFO - Ratio de aceptación de RAG (%): 80.33
+2026-06-17 21:08:42,259 - INFO - Confianza media de RAG: 84.87
+2026-06-17 21:08:42,259 - INFO - Ratio de dispersión en el RAG: 29.17

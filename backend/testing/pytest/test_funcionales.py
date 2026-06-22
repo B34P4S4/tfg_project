@@ -1,5 +1,8 @@
 # PRUEBAS FUNCIONALES CON PYTEST
 
+# Mide la capacidad de la combinación de modelos para identificar correctamente 
+# todos los casos positivos reales dentro de un conjunto de datos. 
+# Para darlo por correcto debe ser igual a mayor al 90%
 def test_recall_ensemble(resultado_analisis):
 
     recall = resultado_analisis[
@@ -8,7 +11,8 @@ def test_recall_ensemble(resultado_analisis):
 
     assert recall >= 90
 
-
+# Mide la capacidad de detección de vulnerabilidades críticas
+# Debe ser del 100% para considerarse adecuado
 def test_critical_recall(resultado_analisis):
 
     recall = resultado_analisis[
@@ -19,14 +23,14 @@ def test_critical_recall(resultado_analisis):
 
     assert recall == 100
 
-
+# Mide la efectividad del proceso de validación y enriquecimiento mediante RAG
 def test_rag(resultado_analisis):
 
     assert resultado_analisis[
         "metricas_rag"
     ]["Ratio de aceptación de RAG (%)"] > 80
 
-
+# Mide la capacidad de detectar al menos una proporción mínima de los ataques incluidos en el conjunto de pruebas
 def test_cobertura_ataques(resultado_analisis):
 
     cobertura = resultado_analisis[
@@ -35,6 +39,8 @@ def test_cobertura_ataques(resultado_analisis):
 
     assert cobertura > 30
 
+# Verifica que el porcentaje de vulnerabilidades detectadas correctamente respecto al total de 
+# vulnerabilidades reportadas sea igual o superior al 80 %
 def test_precision(resultado_analisis):
 
     precision = resultado_analisis[

@@ -9,6 +9,12 @@ const btnExportar = document.getElementById("btnExportar")
 let ultimoResultado = null
 btnExportar.addEventListener("click", exportarPDF)
 
+// CHARTS ESTADISTICAS
+let chartSeveridad = null
+let chartLenguajes = null
+let chartCWE = null
+let chartCAPEC = null
+
 
 // TABS
 document.querySelectorAll(".tab").forEach(tab => {
@@ -320,10 +326,23 @@ function renderVulnerabilidades(vulnerabilidades) {
         const enlace_owasp = obtenerEnlaceOWASP(v.owasp)
         const owasp = obtenerCategoria(v.owasp)
         const enlace_cwe = obtenerEnlaceCWE(v.cwe)
+        console.log("MEDIDAS DE MITIGACION: "+v.mitigation)
+        const mitigations =
+            Array.isArray(v.mitigation)
+                ? v.mitigation
+                : typeof v.mitigation === "string"
+                    ? [v.mitigation]
+                    : [];
 
-        const mitigation = Array.isArray(v.mitigation)
-            ? v.mitigation.map(i => `<li>${i}</li>`).join("")
-            : "<li>N/A</li>"
+        const mitigation =
+            mitigations
+                .filter(item =>
+                    item !== null &&
+                    item !== undefined &&
+                    String(item).trim() !== ""
+                )
+                .map(item => `<li>${item}</li>`)
+                .join("") || "<li>N/A</li>";
 
         return `
 
@@ -337,8 +356,8 @@ function renderVulnerabilidades(vulnerabilidades) {
                 </div>
 
                 <div class="vuln-meta">
-                    <a href="${enlace_cwe}" target="_blank">CWE-${v.cwe || "N/A"}</a> |
-                    CVSS ${v.cvss || "N/A"}/10 ${cvss_string}
+                    <a href="${enlace_cwe}" target="_blank">CWE-${v.cwe || "0"}</a> |
+                    CVSS ${v.cvss || "0"}/10 ${cvss_string}
                 </div>
 
                 <div class="vuln-file">
@@ -346,13 +365,13 @@ function renderVulnerabilidades(vulnerabilidades) {
                 </div>
 
                 <div class="vuln-flow">
-                    <span class="flow-label">Desde la línea:</span>
-                    ${v.source || "N/A"}
+                    <span class="flow-label">Source:</span>
+                    ${v.source || "0"}
 
                     <span class="flow-arrow">→</span>
 
-                    <span class="flow-label">hasta la línea:</span>
-                    ${v.sink || "N/A"}
+                    <span class="flow-label">Sink:</span>
+                    ${v.sink || "0"}
                 </div>
 
             </div>
@@ -373,10 +392,10 @@ function renderVulnerabilidades(vulnerabilidades) {
 
                     <p>
                         <strong>Impacto:</strong>
-                        ${v.impact || "N/A"}/5
+                        ${v.impact || "0"}/5
                         &nbsp; | &nbsp;
                         <strong>Probabilidad:</strong>
-                        ${v.probability || "N/A"}/5
+                        ${v.probability || "0"}/5
                     </p>
 
                     <p>
@@ -384,10 +403,10 @@ function renderVulnerabilidades(vulnerabilidades) {
                         <a href="${enlace_owasp}" target="_blank">${owasp}</a>
                     </p>
 
-                    <p>
+                    <!-- <p>
                         <strong>CAPEC:</strong>
                         ${capecs}
-                    </p>
+                    </p> -->
 
                     <div class="mitre-section">
 
@@ -490,7 +509,7 @@ function renderAtaques(ataquesData) {
                     </div>
 
                     <div class="card-subtitle">
-                        Precisión: ${accuracy_attack}%  
+                        Grado de cobertura en la correlación: ${accuracy_attack}%  
                     </div>
                 </div>
 
@@ -720,7 +739,7 @@ function renderGrafico(ataquesData) {
 
                 <h4>${data.label}</h4>
                 <p><b>Resultado:</b> ${data.resultado}</p>
-                <p><b>Precisión:</b> ${data.accuracy}%</p>
+                <p><b>Grado de cobertura en la correlación:</b> ${data.accuracy}%</p>
                 <p><b>CAPEC:</b> ${capecs_detail}</p>
                 <p><b>Descripción:</b> ${data.descripcion}</p>
             `
@@ -926,7 +945,7 @@ function renderEstadisticas(stats){
     renderLenguajes(stats)
     renderCWE(stats)
     renderCAPEC(stats)
-    //renderHistoricoStats(stats)
+    
 }
 
 function renderResumenStats(stats){
@@ -965,7 +984,11 @@ function renderSeveridad(stats){
 
     const s = stats.severidad
 
-    new Chart(
+    if (chartSeveridad) {
+        chartSeveridad.destroy()
+    }
+
+    chartSeveridad = new Chart(
         document.getElementById("chartSeveridad"),
         {
             type:"pie",
@@ -999,10 +1022,13 @@ function renderSeveridad(stats){
 
 function renderLenguajes(stats){
 
-    const datos =
-        stats.vulnerabilidades_por_lenguaje
+    const datos = stats.vulnerabilidades_por_lenguaje
 
-    new Chart(
+    if (chartLenguajes) {
+         chartLenguajes.destroy()
+    }
+
+    chartLenguajes = new Chart(
         document.getElementById("chartLenguajes"),
         {
             type:"bar",
@@ -1011,15 +1037,9 @@ function renderLenguajes(stats){
                 labels:Object.keys(datos),
 
                 datasets:[{
-                    label:"Nº de vulnerabilidades por lenguaje",
+                    label:"Nº de vulnerabilidades detectadas por lenguaje",
                     data:Object.values(datos),
-                    backgroundColor: [
-                        "#5e27f5",
-                        "#f39c12",
-                        "#1be4c2",
-                        "#116835",
-                        "#cc2ebf"
-                    ]
+                    backgroundColor: "#053f0d"
                 }]
             }
         }
@@ -1028,10 +1048,13 @@ function renderLenguajes(stats){
 
 function renderCWE(stats){
 
-    const top =
-        stats.cwe_mas_frecuentes.slice(0,10)
+    const top = stats.cwe_mas_frecuentes.slice(0,10)
 
-    new Chart(
+    if (chartCWE) {
+         chartCWE.destroy()
+    }
+
+    chartCWE = new Chart(
         document.getElementById("chartCWE"),
         {
             type:"bar",
@@ -1054,8 +1077,11 @@ function renderCAPEC(stats){
     console.log("CAPECS:", stats.capec_mas_frecuentes);
     const top = stats.capec_mas_frecuentes.slice(0,10)
 
-    console.log("TOP:", top);
-    new Chart(
+    if (chartCAPEC) {
+         chartCAPEC.destroy()
+    }
+
+    chartCAPEC = new Chart(
         document.getElementById("chartCAPEC"),
         {
             type:"bar",
@@ -1073,32 +1099,6 @@ function renderCAPEC(stats){
     )
 }
 
-function renderHistoricoStats(stats){
-
-    const datos = stats.historico
-
-    new Chart(
-        document.getElementById("chartHistorico"),
-        {
-            type:"line",
-
-            data:{
-
-                labels:
-                    datos.map(x => x.fecha),
-
-                datasets:[{
-                    label:"Evolución en el análisis de vulnerabilidades",
-
-                    data:
-                        datos.map(
-                            x => x.vulnerabilidades
-                        )
-                }]
-            }
-        }
-    )
-}
 
 // CARGA ULTIMOS ANALISIS AL CARGAR LA PAGINA
 window.addEventListener("load", () => {

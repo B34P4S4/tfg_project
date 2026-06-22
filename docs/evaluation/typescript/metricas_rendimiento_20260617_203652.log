@@ -1,0 +1,6 @@
+2026-06-17 20:36:52,972 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-17 20:36:52,972 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/typescript 
+2026-06-17 20:36:52,972 - INFO - tiempo_total_segundos: 609.7163
+2026-06-17 20:36:52,972 - INFO - memoria_consumida_mb: 13.29
+2026-06-17 20:36:52,972 - INFO - num_archivos: 30
+2026-06-17 20:36:52,972 - INFO - tiempo_medio_archivo: 20.3239

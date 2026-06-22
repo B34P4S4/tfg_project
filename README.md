@@ -26,7 +26,21 @@ Y si da problemas es recomendable instalar por partes:
 - pip install torch==2.2.2
 - pip install -r requirements.txt
 
+Requisitos previos:
+- Docker
+- Docker Compose
+- Claves de API (OpenAI / Gemini)
+
+Configuración del entorno:
+- Crear un archivo `.env` en la raíz del proyecto con la forma:
+    OPENAI_API_KEY=tu_clave
+    GEMINI_API_KEY=tu_clave
+
 Para ejecutar:
-- git clone ...
-- docker build -t vucan-backend . 
-- docker run -p 5000:5000 --env-file .env -v "RUTA_COMPLETA_DEL_PROYECTO_A_ANALIZAR" vucan-backend
+- git clone https://github.com/B34P4S4/tfg_project
+- cd vulcanai
+- docker compose up --build
+- http://localhost:3000 (o el puerto configurado)
+
+Guía de usuario se encuentra en:
+- docs/user_guide.md

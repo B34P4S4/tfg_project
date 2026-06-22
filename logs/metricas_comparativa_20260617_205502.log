@@ -1,0 +1,5 @@
+2026-06-17 20:55:02,739 - INFO - === MÉTRICAS COMPARATIVA ===
+2026-06-17 20:55:02,741 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/sql 
+2026-06-17 20:55:02,741 - INFO - Por lenguaje: {'SQL': {'Precision (%)': 85.11, 'Recall (%)': 100.0}}
+2026-06-17 20:55:02,741 - INFO - Por modelo: {'OpenAI': {'Precision (%)': 83.33, 'Recall (%)': 75.0, 'Falsos Positivos (%)': 16.67, 'Falsos Negativos (%)': 25.0}, 'Gemini': {'Precision (%)': 97.3, 'Recall (%)': 90.0, 'Falsos Positivos (%)': 2.7, 'Falsos Negativos (%)': 10.0}}
+2026-06-17 20:55:02,743 - INFO - Por pipeline: {'OpenAI': {'Precision (%)': 83.33, 'Recall (%)': 75.0, 'Falsos Positivos (%)': 16.67, 'Falsos Negativos (%)': 25.0}, 'Gemini': {'Precision (%)': 97.3, 'Recall (%)': 90.0, 'Falsos Positivos (%)': 2.7, 'Falsos Negativos (%)': 10.0}, 'Union de modelos': {'Precision (%)': 85.11, 'Recall (%)': 100.0, 'Falsos Positivos (%)': 14.89, 'Falsos Negativos (%)': 0.0}}

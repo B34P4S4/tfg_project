@@ -1,0 +1,9 @@
+2026-06-17 20:36:52,940 - INFO - === MÉTRICAS ATAQUES_CORRELACIONADOS ===
+2026-06-17 20:36:52,941 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/typescript 
+2026-06-17 20:36:52,941 - INFO - Cobertura de ataque (%): 81.82
+2026-06-17 20:36:52,941 - INFO - Media de patrón de ataque completado (%): 77.8
+2026-06-17 20:36:52,941 - INFO - Máximo número de patrón de ataque completado (%): 100.0
+2026-06-17 20:36:52,941 - INFO - Fuerza de la correlación de ataques (%): 77.8
+2026-06-17 20:36:52,941 - INFO - Densidad en la correlación de ataques (%): 82.35
+2026-06-17 20:36:52,941 - INFO - Diversidad de ataques: 9
+2026-06-17 20:36:52,941 - INFO - Nivel de severidad de ataques: 7.55

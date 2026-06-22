@@ -3,7 +3,7 @@ from backend.core.agents.agent import analizar_proyecto
 
 # SE IRA CAMBIANDO SEGUN EL CORPUS QUE SE APLIQUE PARA LAS PRUEBAS
 RUTA_TEST = (
-    "backend/testing/corpus/python"
+    "backend/testing/corpus/php"
 )
 
 @pytest.fixture(scope="session")

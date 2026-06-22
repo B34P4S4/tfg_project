@@ -1,0 +1,5 @@
+2026-06-20 13:07:25,292 - INFO - === MÉTRICAS RAG ===
+2026-06-20 13:07:25,292 - INFO - -> RUTA ANALIZADA: C:\Users\bbps14\Documents\bps\PERSONAL\UNIR\TFG\tfg_project\backend\testing\corpus\sql 
+2026-06-20 13:07:25,292 - INFO - Ratio de aceptación de RAG (%): 86.67
+2026-06-20 13:07:25,292 - INFO - Confianza media de RAG: 88.47
+2026-06-20 13:07:25,294 - INFO - Ratio de dispersión en el RAG: 25.95

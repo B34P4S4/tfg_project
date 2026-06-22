@@ -1,0 +1,5 @@
+2026-06-17 20:36:52,892 - INFO - === MÉTRICAS RAG ===
+2026-06-17 20:36:52,892 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/typescript 
+2026-06-17 20:36:52,892 - INFO - Ratio de aceptación de RAG (%): 87.04
+2026-06-17 20:36:52,892 - INFO - Confianza media de RAG: 88.89
+2026-06-17 20:36:52,898 - INFO - Ratio de dispersión en el RAG: 22.43

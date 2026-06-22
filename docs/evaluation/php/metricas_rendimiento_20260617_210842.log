@@ -1,0 +1,6 @@
+2026-06-17 21:08:42,370 - INFO - === MÉTRICAS RENDIMIENTO ===
+2026-06-17 21:08:42,370 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/php 
+2026-06-17 21:08:42,370 - INFO - tiempo_total_segundos: 612.504
+2026-06-17 21:08:42,370 - INFO - memoria_consumida_mb: 10.84
+2026-06-17 21:08:42,370 - INFO - num_archivos: 33
+2026-06-17 21:08:42,370 - INFO - tiempo_medio_archivo: 18.5607

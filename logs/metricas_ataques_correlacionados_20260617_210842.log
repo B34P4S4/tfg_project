@@ -1,0 +1,9 @@
+2026-06-17 21:08:42,323 - INFO - === MÉTRICAS ATAQUES_CORRELACIONADOS ===
+2026-06-17 21:08:42,323 - INFO - -> RUTA ANALIZADA: backend/testing/corpus/php 
+2026-06-17 21:08:42,323 - INFO - Cobertura de ataque (%): 72.73
+2026-06-17 21:08:42,323 - INFO - Media de patrón de ataque completado (%): 83.35
+2026-06-17 21:08:42,323 - INFO - Máximo número de patrón de ataque completado (%): 100.0
+2026-06-17 21:08:42,323 - INFO - Fuerza de la correlación de ataques (%): 83.35
+2026-06-17 21:08:42,323 - INFO - Densidad en la correlación de ataques (%): 71.05
+2026-06-17 21:08:42,323 - INFO - Diversidad de ataques: 8
+2026-06-17 21:08:42,323 - INFO - Nivel de severidad de ataques: 7.84

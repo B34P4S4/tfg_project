@@ -418,7 +418,7 @@ def obtener_analisis(analisis_id):
         "ataques": obtener_ataques(analisis_id)
     }
 
-def obtener_ultimos_analisis(limit=20):
+def obtener_ultimos_analisis(limit=50):
 
     conn = conectar_bd()
     cursor = conn.cursor()
