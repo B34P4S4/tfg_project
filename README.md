@@ -1,7 +1,7 @@
-Agente de Inteligencia Artificial para la detección de vulnerabilidades en código fuente utilizando arquitectura RAG (Retrieval-Augmented Generation).
+# Agente de Inteligencia Artificial para la detección de vulnerabilidades en código fuente utilizando arquitectura RAG (Retrieval-Augmented Generation).
 Este proyecto combina embeddings, búsqueda vectorial y modelos de lenguaje para analizar código y detectar posibles problemas de seguridad.
 
-Características:
+## Características:
 - Análisis estático de código fuente
 - Generación de embeddings con sentence-transformers
 - Búsqueda eficiente 
@@ -9,7 +9,7 @@ Características:
 - API REST con Flask
 - Soporte para múltiples fuentes de conocimiento
 
-Tecnologías utilizadas:
+## Tecnologías utilizadas:
 - Python 3.10
 - Flask
 - sentence-transformers
@@ -26,17 +26,17 @@ Y si da problemas es recomendable instalar por partes:
 - pip install torch==2.2.2
 - pip install -r requirements.txt
 
-Requisitos previos:
+## Requisitos previos:
 - Docker
 - Docker Compose
 - Claves de API (OpenAI / Gemini)
 
-Configuración del entorno:
+## Configuración del entorno:
 - Crear un archivo `.env` en la raíz del proyecto con la forma:
     OPENAI_API_KEY=tu_clave
     GEMINI_API_KEY=tu_clave
 
-Para ejecutar:
+## Para ejecutar:
 - git clone https://github.com/B34P4S4/tfg_project
 - cd vulcanai
 - docker compose up --build
